@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Drone, Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react'
+import { Plane, Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -33,7 +33,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Drone className="w-5 h-5 text-white" />
+                <Plane className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold text-white">Drone Club</span>
             </Link>
