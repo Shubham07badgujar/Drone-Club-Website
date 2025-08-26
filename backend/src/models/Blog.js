@@ -1,6 +1,14 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
+// Helper function to handle array types for different dialects
+const getArrayType = () => {
+  if (sequelize.getDialect() === 'sqlite') {
+    return DataTypes.TEXT // Store as JSON string in SQLite
+  }
+  return DataTypes.ARRAY(DataTypes.STRING) // Use native array for PostgreSQL
+}
+
 const Blog = sequelize.define('Blog', {
   id: {
     type: DataTypes.UUID,
@@ -28,8 +36,26 @@ const Blog = sequelize.define('Blog', {
     allowNull: true,
   },
   tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    defaultValue: [],
+    type: getArrayType(),
+    defaultValue: sequelize.getDialect() === 'sqlite' ? '[]' : [],
+    get() {
+      const value = this.getDataValue('tags')
+      if (sequelize.getDialect() === 'sqlite') {
+        try {
+          return JSON.parse(value || '[]')
+        } catch {
+          return []
+        }
+      }
+      return value || []
+    },
+    set(value) {
+      if (sequelize.getDialect() === 'sqlite') {
+        this.setDataValue('tags', JSON.stringify(value || []))
+      } else {
+        this.setDataValue('tags', value || [])
+      }
+    }
   },
   published: {
     type: DataTypes.BOOLEAN,

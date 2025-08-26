@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
@@ -19,6 +19,11 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
+  useEffect(() => {
+    // Enable dark mode by default
+    document.documentElement.classList.add('dark')
+  }, [])
+
   return (
     <AuthProvider>
       <Router>

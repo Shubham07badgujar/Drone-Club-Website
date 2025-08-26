@@ -1,6 +1,14 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
+// Helper function to handle array types for different dialects
+const getArrayType = () => {
+  if (sequelize.getDialect() === 'sqlite') {
+    return DataTypes.TEXT // Store as JSON string in SQLite
+  }
+  return DataTypes.ARRAY(DataTypes.STRING) // Use native array for PostgreSQL
+}
+
 const Project = sequelize.define('Project', {
   id: {
     type: DataTypes.UUID,
@@ -20,12 +28,33 @@ const Project = sequelize.define('Project', {
     allowNull: true,
   },
   technologies: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    defaultValue: [],
+    type: getArrayType(),
+    defaultValue: sequelize.getDialect() === 'sqlite' ? '[]' : [],
+    get() {
+      const value = this.getDataValue('technologies')
+      if (sequelize.getDialect() === 'sqlite') {
+        try {
+          return JSON.parse(value || '[]')
+        } catch {
+          return []
+        }
+      }
+      return value || []
+    },
+    set(value) {
+      if (sequelize.getDialect() === 'sqlite') {
+        this.setDataValue('technologies', JSON.stringify(value || []))
+      } else {
+        this.setDataValue('technologies', value || [])
+      }
+    }
   },
   status: {
-    type: DataTypes.ENUM('planning', 'in-progress', 'completed', 'on-hold'),
+    type: DataTypes.STRING,
     defaultValue: 'planning',
+    validate: {
+      isIn: [['planning', 'in-progress', 'completed', 'on-hold']]
+    }
   },
   github_url: {
     type: DataTypes.STRING,

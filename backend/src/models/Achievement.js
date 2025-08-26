@@ -1,6 +1,14 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
+// Helper function to handle array types for different dialects
+const getArrayType = () => {
+  if (sequelize.getDialect() === 'sqlite') {
+    return DataTypes.TEXT // Store as JSON string in SQLite
+  }
+  return DataTypes.ARRAY(DataTypes.STRING) // Use native array for PostgreSQL
+}
+
 const Achievement = sequelize.define('Achievement', {
   id: {
     type: DataTypes.UUID,
@@ -28,8 +36,11 @@ const Achievement = sequelize.define('Achievement', {
     allowNull: false,
   },
   type: {
-    type: DataTypes.ENUM('award', 'competition', 'milestone', 'certification'),
+    type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      isIn: [['award', 'competition', 'milestone', 'certification']]
+    }
   },
   category: {
     type: DataTypes.STRING,
@@ -44,8 +55,26 @@ const Achievement = sequelize.define('Achievement', {
     allowNull: true,
   },
   team_members: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    defaultValue: [],
+    type: getArrayType(),
+    defaultValue: sequelize.getDialect() === 'sqlite' ? '[]' : [],
+    get() {
+      const value = this.getDataValue('team_members')
+      if (sequelize.getDialect() === 'sqlite') {
+        try {
+          return JSON.parse(value || '[]')
+        } catch {
+          return []
+        }
+      }
+      return value || []
+    },
+    set(value) {
+      if (sequelize.getDialect() === 'sqlite') {
+        this.setDataValue('team_members', JSON.stringify(value || []))
+      } else {
+        this.setDataValue('team_members', value || [])
+      }
+    }
   },
   is_featured: {
     type: DataTypes.BOOLEAN,

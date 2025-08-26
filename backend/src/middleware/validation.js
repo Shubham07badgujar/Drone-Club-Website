@@ -97,3 +97,13 @@ export const validate = (schema) => {
     next()
   }
 }
+
+// Specific validation functions for routes
+export const validateLogin = validate(loginSchema)
+export const validateProject = validate(projectSchema)
+export const validateEvent = validate(eventSchema)
+export const validateEventRegistration = validate(eventRegistrationSchema)
+export const validateBlog = validate(blogSchema)
+export const validateTeamMember = validate(teamMemberSchema)
+export const validateDepartment = validate(departmentSchema)
+export const validateAchievement = validate(achievementSchema)
