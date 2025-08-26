@@ -7,6 +7,18 @@ import Button from '../ui/Button'
 const BlogCard = ({ blog, onReadMore }) => {
   const { title, content, author, imageUrl, createdAt } = blog
 
+  // Safe date formatting
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'No date'
+    try {
+      const date = new Date(dateStr)
+      if (isNaN(date.getTime())) return 'Invalid date'
+      return format(date, 'MMM dd, yyyy')
+    } catch (error) {
+      return 'Invalid date'
+    }
+  }
+
   return (
     <Card className="group">
       {imageUrl && (
@@ -37,7 +49,7 @@ const BlogCard = ({ blog, onReadMore }) => {
             
             <div className="flex items-center">
               <Calendar className="w-3 h-3 mr-1" />
-              {format(new Date(createdAt), 'MMM dd, yyyy')}
+              {formatDate(createdAt)}
             </div>
           </div>
           

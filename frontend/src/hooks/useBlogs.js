@@ -25,7 +25,7 @@ export const useBlogs = () => {
       
       const response = await axios.get('/api/blogs', {
         signal: abortControllerRef.current.signal,
-        timeout: 10000
+        timeout: 5000 // Reduced timeout
       })
       
       setBlogs(response.data.blogs || [])
@@ -39,8 +39,11 @@ export const useBlogs = () => {
         // Use fallback data
         setBlogs(fallbackData.blogs)
         
-        if (err.code !== 'ECONNREFUSED' && err.response?.status !== 429) {
-          toast.error('Using offline data - ' + message)
+        // Only show toast for actual errors, not timeouts or server unavailable
+        if (err.code !== 'ECONNREFUSED' && 
+            err.code !== 'ECONNABORTED' && 
+            err.response?.status !== 429) {
+          console.warn('API unavailable, using fallback data')
         }
       }
     } finally {

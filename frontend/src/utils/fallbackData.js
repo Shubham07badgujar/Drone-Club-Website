@@ -3,33 +3,36 @@ export const fallbackData = {
   projects: [
     {
       id: 1,
+      _id: "proj_1",
       title: "Autonomous Surveillance Drone",
       description: "Advanced AI-powered drone for security and surveillance operations",
       image: "/api/placeholder/400/300",
       status: "active",
       technologies: ["AI", "Computer Vision", "GPS"],
       category: "Security",
-      createdAt: "2024-01-15"
+      createdAt: "2024-01-15T10:00:00Z"
     },
     {
       id: 2,
+      _id: "proj_2", 
       title: "Racing Drone Championship",
       description: "High-speed racing drone with advanced flight controls",
       image: "/api/placeholder/400/300",
       status: "completed",
       technologies: ["Carbon Fiber", "FPV", "Telemetry"],
       category: "Racing",
-      createdAt: "2024-02-01"
+      createdAt: "2024-02-01T14:00:00Z"
     },
     {
       id: 3,
+      _id: "proj_3",
       title: "Delivery Drone Network",
       description: "Commercial delivery system using autonomous drones",
       image: "/api/placeholder/400/300",
       status: "planning",
       technologies: ["Route Planning", "Logistics", "IoT"],
       category: "Commercial",
-      createdAt: "2024-03-10"
+      createdAt: "2024-03-10T09:00:00Z"
     }
   ],
   
@@ -61,22 +64,28 @@ export const fallbackData = {
   blogs: [
     {
       id: 1,
+      _id: "blog_1",
       title: "The Future of Autonomous Flight",
       excerpt: "Exploring the latest developments in AI-powered drone technology",
       content: "The future of autonomous flight is rapidly approaching...",
       author: "Alex Chen",
+      createdAt: "2024-08-20T10:00:00Z",
       publishedAt: "2024-08-20",
       image: "/api/placeholder/600/400",
+      imageUrl: "/api/placeholder/600/400",
       tags: ["AI", "Autonomy", "Future Tech"]
     },
     {
       id: 2,
+      _id: "blog_2",
       title: "Drone Safety Best Practices",
       excerpt: "Essential safety guidelines for responsible drone operation",
       content: "Safety is paramount when operating drones...",
       author: "Sarah Johnson",
+      createdAt: "2024-08-18T14:30:00Z",
       publishedAt: "2024-08-18",
       image: "/api/placeholder/600/400",
+      imageUrl: "/api/placeholder/600/400",
       tags: ["Safety", "Guidelines", "Best Practices"]
     }
   ],
