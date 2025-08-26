@@ -1,10 +1,59 @@
 import { Project } from '../models/mongodb/index.js'
+import mongoose from 'mongoose'
+
+// Fallback data when MongoDB is not connected
+const fallbackProjects = [
+  {
+    _id: '66c123456789abcdef123456',
+    title: 'Autonomous Racing Drone',
+    description: 'High-speed autonomous racing drone with advanced computer vision and machine learning capabilities for obstacle detection and path optimization.',
+    technologies: ['Python', 'OpenCV', 'TensorFlow', 'ROS', 'ArduPilot'],
+    status: 'in-progress',
+    github_url: 'https://github.com/droneclub/racing-drone',
+    team_members: ['Alex Johnson', 'Sarah Chen', 'Mike Rodriguez'],
+    is_featured: true,
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date('2024-08-20')
+  },
+  {
+    _id: '66c123456789abcdef123457',
+    title: 'Search and Rescue Quadcopter',
+    description: 'Emergency response drone equipped with thermal imaging, GPS tracking, and real-time communication systems for search and rescue operations.',
+    technologies: ['C++', 'FLIR SDK', 'GPS', 'Radio Communication'],
+    status: 'completed',
+    demo_url: 'https://demo.droneclub.com/search-rescue',
+    team_members: ['Emily Davis', 'John Park'],
+    is_featured: true,
+    createdAt: new Date('2024-02-10'),
+    updatedAt: new Date('2024-07-30')
+  }
+]
+
+// Check if MongoDB is connected
+const isMongoConnected = () => {
+  return mongoose.connection.readyState === 1
+}
 
 // @desc    Get all projects
 // @route   GET /api/projects
 // @access  Public
 export const getProjects = async (req, res) => {
   try {
+    // Use fallback data if MongoDB is not connected
+    if (!isMongoConnected()) {
+      return res.json({
+        success: true,
+        projects: fallbackProjects,
+        pagination: {
+          page: 1,
+          limit: 10,
+          total: fallbackProjects.length,
+          pages: 1
+        },
+        message: 'Using fallback data - Configure MongoDB Atlas for full functionality'
+      })
+    }
+
     const { page = 1, limit = 10, status, search } = req.query
     const skip = (page - 1) * limit
 
@@ -53,6 +102,22 @@ export const getProjects = async (req, res) => {
 // @access  Public
 export const getProject = async (req, res) => {
   try {
+    // Use fallback data if MongoDB is not connected
+    if (!isMongoConnected()) {
+      const project = fallbackProjects.find(p => p._id === req.params.id)
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        })
+      }
+      return res.json({
+        success: true,
+        project,
+        message: 'Using fallback data - Configure MongoDB Atlas for full functionality'
+      })
+    }
+
     const project = await Project.findById(req.params.id).lean()
 
     if (!project) {
