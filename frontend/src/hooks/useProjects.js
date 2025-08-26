@@ -1,24 +1,55 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { fallbackData } from '../utils/fallbackData'
 
 export const useProjects = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const fetchingRef = useRef(false)
+  const abortControllerRef = useRef(null)
 
   const fetchProjects = async () => {
+    // Prevent multiple simultaneous calls
+    if (fetchingRef.current) return
+    
     try {
+      fetchingRef.current = true
       setLoading(true)
-      const response = await axios.get('/api/projects')
-      setProjects(response.data.projects)
+      
+      // Cancel previous request if exists
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+      
+      // Create new abort controller
+      abortControllerRef.current = new AbortController()
+      
+      const response = await axios.get('/api/projects', {
+        signal: abortControllerRef.current.signal,
+        timeout: 10000 // 10 second timeout
+      })
+      
+      setProjects(response.data.projects || [])
       setError(null)
     } catch (err) {
-      const message = err.response?.data?.message || 'Failed to fetch projects'
-      setError(message)
-      toast.error(message)
+      if (err.name !== 'AbortError' && err.name !== 'CanceledError') {
+        const message = err.response?.data?.message || 'Failed to fetch projects'
+        setError(message)
+        console.error('Projects fetch error:', err)
+        
+        // Use fallback data when API fails
+        setProjects(fallbackData.projects)
+        
+        // Only show toast for non-network errors to avoid spam
+        if (err.code !== 'ECONNREFUSED' && err.response?.status !== 429) {
+          toast.error('Using offline data - ' + message)
+        }
+      }
     } finally {
       setLoading(false)
+      fetchingRef.current = false
     }
   }
 
@@ -66,8 +97,19 @@ export const useProjects = () => {
   }
 
   useEffect(() => {
-    fetchProjects()
-  }, [])
+    // Add a small delay to prevent immediate multiple calls
+    const timer = setTimeout(() => {
+      fetchProjects()
+    }, 100)
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timer)
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+    }
+  }, []) // Empty dependency array to run only once
 
   return {
     projects,

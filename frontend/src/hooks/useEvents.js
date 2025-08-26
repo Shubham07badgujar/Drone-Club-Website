@@ -1,24 +1,51 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { fallbackData } from '../utils/fallbackData'
 
 export const useEvents = () => {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const fetchingRef = useRef(false)
+  const abortControllerRef = useRef(null)
 
   const fetchEvents = async () => {
+    if (fetchingRef.current) return
+    
     try {
+      fetchingRef.current = true
       setLoading(true)
-      const response = await axios.get('/api/events')
-      setEvents(response.data.events)
+      
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+      
+      abortControllerRef.current = new AbortController()
+      
+      const response = await axios.get('/api/events', {
+        signal: abortControllerRef.current.signal,
+        timeout: 10000
+      })
+      
+      setEvents(response.data.events || [])
       setError(null)
     } catch (err) {
-      const message = err.response?.data?.message || 'Failed to fetch events'
-      setError(message)
-      toast.error(message)
+      if (err.name !== 'AbortError' && err.name !== 'CanceledError') {
+        const message = err.response?.data?.message || 'Failed to fetch events'
+        setError(message)
+        console.error('Events fetch error:', err)
+        
+        // Use fallback data
+        setEvents(fallbackData.events)
+        
+        if (err.code !== 'ECONNREFUSED' && err.response?.status !== 429) {
+          toast.error('Using offline data - ' + message)
+        }
+      }
     } finally {
       setLoading(false)
+      fetchingRef.current = false
     }
   }
 
@@ -86,7 +113,16 @@ export const useEvents = () => {
   }
 
   useEffect(() => {
-    fetchEvents()
+    const timer = setTimeout(() => {
+      fetchEvents()
+    }, 150) // Slightly different delay to prevent simultaneous calls
+
+    return () => {
+      clearTimeout(timer)
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+    }
   }, [])
 
   return {

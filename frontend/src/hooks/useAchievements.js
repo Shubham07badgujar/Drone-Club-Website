@@ -1,24 +1,51 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { fallbackData } from '../utils/fallbackData'
 
 export const useAchievements = () => {
   const [achievements, setAchievements] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const fetchingRef = useRef(false)
+  const abortControllerRef = useRef(null)
 
   const fetchAchievements = async () => {
+    if (fetchingRef.current) return
+    
     try {
+      fetchingRef.current = true
       setLoading(true)
-      const response = await axios.get('/api/achievements')
-      setAchievements(response.data.achievements)
+      
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+      
+      abortControllerRef.current = new AbortController()
+      
+      const response = await axios.get('/api/achievements', {
+        signal: abortControllerRef.current.signal,
+        timeout: 10000
+      })
+      
+      setAchievements(response.data.achievements || [])
       setError(null)
     } catch (err) {
-      const message = err.response?.data?.message || 'Failed to fetch achievements'
-      setError(message)
-      toast.error(message)
+      if (err.name !== 'AbortError' && err.name !== 'CanceledError') {
+        const message = err.response?.data?.message || 'Failed to fetch achievements'
+        setError(message)
+        console.error('Achievements fetch error:', err)
+        
+        // Use fallback data
+        setAchievements(fallbackData.achievements)
+        
+        if (err.code !== 'ECONNREFUSED' && err.response?.status !== 429) {
+          toast.error('Using offline data - ' + message)
+        }
+      }
     } finally {
       setLoading(false)
+      fetchingRef.current = false
     }
   }
 
@@ -66,7 +93,16 @@ export const useAchievements = () => {
   }
 
   useEffect(() => {
-    fetchAchievements()
+    const timer = setTimeout(() => {
+      fetchAchievements()
+    }, 250) // Different delay
+
+    return () => {
+      clearTimeout(timer)
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+    }
   }, [])
 
   return {
