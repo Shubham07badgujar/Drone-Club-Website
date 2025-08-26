@@ -53,6 +53,8 @@ body::after {
 }
 
 @layer components {
+  /* Mobile-first responsive components */
+  
   /* Glass effect for components */
   .glass-effect {
     background: rgba(26, 26, 26, 0.8);
@@ -71,11 +73,20 @@ body::after {
       0 0 20px rgba(220, 38, 38, 0.1);
   }
 
-  /* Button styles with drone theme */
+  /* Mobile-optimized button styles */
   .btn-primary {
     background: linear-gradient(135deg, #dc2626, #991b1b);
     border: 1px solid #dc2626;
-    @apply text-white py-2 px-6 rounded-lg font-medium transition-all duration-300 relative overflow-hidden;
+    @apply text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 relative overflow-hidden;
+    min-height: 44px; /* iOS recommended touch target */
+  }
+
+  /* Touch devices get larger touch targets */
+  @media (hover: none) {
+    .btn-primary {
+      @apply py-4 px-8;
+      min-height: 48px;
+    }
   }
 
   .btn-primary::before {
@@ -96,14 +107,35 @@ body::after {
   .btn-primary:hover {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
-    transform: translateY(-2px);
+  }
+
+  /* No hover effects on touch devices */
+  @media (hover: none) {
+    .btn-primary:hover {
+      transform: none;
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+    }
+  }
+
+  /* Active state for touch devices */
+  .btn-primary:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
   }
 
   .btn-secondary {
     background: rgba(26, 26, 26, 0.8);
     border: 1px solid rgba(220, 38, 38, 0.5);
-    @apply text-red-400 py-2 px-6 rounded-lg font-medium transition-all duration-300;
+    @apply text-red-400 py-3 px-6 rounded-lg font-medium transition-all duration-300;
     backdrop-filter: blur(8px);
+    min-height: 44px;
+  }
+
+  @media (hover: none) {
+    .btn-secondary {
+      @apply py-4 px-8;
+      min-height: 48px;
+    }
   }
 
   .btn-secondary:hover {
@@ -113,7 +145,12 @@ body::after {
     box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
   }
 
-  /* Card styles */
+  .btn-secondary:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
+
+  /* Mobile-optimized card styles */
   .card-drone {
     background: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(12px);
@@ -132,24 +169,37 @@ body::after {
     opacity: 0.5;
   }
 
-  .card-drone:hover {
-    transform: translateY(-5px);
-    border-color: rgba(220, 38, 38, 0.4);
-    box-shadow: 
-      0 20px 40px rgba(0, 0, 0, 0.3),
-      0 0 30px rgba(220, 38, 38, 0.1);
+  /* Reduce transform effects on mobile for better performance */
+  @media (min-width: 768px) {
+    .card-drone:hover {
+      transform: translateY(-5px);
+      border-color: rgba(220, 38, 38, 0.4);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(220, 38, 38, 0.1);
+    }
   }
 
-  /* Navigation styles */
+  /* Touch feedback for mobile */
+  @media (hover: none) {
+    .card-drone:active {
+      transform: scale(0.99);
+      transition-duration: 0.1s;
+    }
+  }
+
+  /* Mobile-friendly navigation */
   .navbar-link {
     @apply text-gray-300 transition-all duration-300 relative font-medium;
+    padding: 0.75rem 1rem; /* Better touch targets */
+    border-radius: 0.5rem;
   }
 
   .navbar-link::after {
     content: '';
     position: absolute;
-    bottom: -2px;
-    left: 0;
+    bottom: 0.25rem;
+    left: 1rem;
     width: 0;
     height: 2px;
     background: #dc2626;
@@ -158,18 +208,21 @@ body::after {
 
   .navbar-link:hover {
     @apply text-red-400;
+    background: rgba(220, 38, 38, 0.1);
   }
 
   .navbar-link:hover::after {
-    width: 100%;
+    width: calc(100% - 2rem);
   }
 
-  /* Input fields */
+  /* Mobile input optimizations */
   .input-field {
     background: rgba(26, 26, 26, 0.8);
     border: 1px solid rgba(220, 38, 38, 0.2);
-    @apply text-gray-100 rounded-lg px-4 py-3 transition-all duration-200;
+    @apply text-gray-100 rounded-lg px-4 py-4 transition-all duration-200;
     backdrop-filter: blur(8px);
+    min-height: 48px; /* Better mobile touch target */
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 
   .input-field:focus {
@@ -190,9 +243,44 @@ body::after {
       0 0 15px rgba(220, 38, 38, 0.4);
   }
 
-  /* Pulse animation for accents */
-  .pulse-red {
-    animation: pulse-red 2s ease-in-out infinite;
+  /* Mobile responsive text sizing */
+  .hero-title {
+    @apply text-4xl;
+  }
+
+  @media (min-width: 640px) {
+    .hero-title {
+      @apply text-6xl;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      @apply text-7xl;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      @apply text-8xl;
+    }
+  }
+
+  /* Mobile-specific grid layouts */
+  .mobile-grid {
+    @apply grid grid-cols-1 gap-4;
+  }
+
+  @media (min-width: 640px) {
+    .mobile-grid {
+      @apply grid-cols-2 gap-6;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-grid {
+      @apply grid-cols-3 gap-8;
+    }
   }
 
   /* Loading animation */
@@ -201,6 +289,21 @@ body::after {
     border-top: 2px solid #dc2626;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+  }
+
+  /* Mobile-safe animations - reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary, .btn-secondary, .card-drone, .navbar-link {
+      transition: none;
+    }
+    
+    .text-glow, .text-glow-strong {
+      text-shadow: none;
+    }
+    
+    .loading-spinner {
+      animation: none;
+    }
   }
 }
 

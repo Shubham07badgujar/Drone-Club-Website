@@ -1,5 +1,4 @@
-import { Project } from '../models/index.js'
-import { Op } from 'sequelize'
+import { Project } from '../models/mongodb/index.js'
 
 // @desc    Get all projects
 // @route   GET /api/projects
@@ -7,26 +6,28 @@ import { Op } from 'sequelize'
 export const getProjects = async (req, res) => {
   try {
     const { page = 1, limit = 10, status, search } = req.query
-    const offset = (page - 1) * limit
+    const skip = (page - 1) * limit
 
-    // Build where clause
-    const whereClause = {}
+    // Build query object
+    const query = {}
     if (status) {
-      whereClause.status = status
+      query.status = status
     }
     if (search) {
-      whereClause[Op.or] = [
-        { title: { [Op.iLike]: `%${search}%` } },
-        { description: { [Op.iLike]: `%${search}%` } },
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
       ]
     }
 
-    const { count, rows: projects } = await Project.findAndCountAll({
-      where: whereClause,
-      order: [['created_at', 'DESC']],
-      limit: parseInt(limit),
-      offset: parseInt(offset),
-    })
+    const [projects, total] = await Promise.all([
+      Project.find(query)
+        .sort({ createdAt: -1 })
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
+        .lean(),
+      Project.countDocuments(query)
+    ])
 
     res.json({
       success: true,
@@ -34,8 +35,8 @@ export const getProjects = async (req, res) => {
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
-        total: count,
-        pages: Math.ceil(count / limit),
+        total,
+        pages: Math.ceil(total / limit),
       },
     })
   } catch (error) {
@@ -52,7 +53,7 @@ export const getProjects = async (req, res) => {
 // @access  Public
 export const getProject = async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id)
+    const project = await Project.findById(req.params.id).lean()
 
     if (!project) {
       return res.status(404).json({
@@ -79,11 +80,8 @@ export const getProject = async (req, res) => {
 // @access  Private (Admin)
 export const createProject = async (req, res) => {
   try {
-    const project = await Project.create({
-      ...req.body,
-      created_at: new Date(),
-      updated_at: new Date(),
-    })
+    const project = new Project(req.body)
+    await project.save()
 
     res.status(201).json({
       success: true,
@@ -104,7 +102,11 @@ export const createProject = async (req, res) => {
 // @access  Private (Admin)
 export const updateProject = async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id)
+    const project = await Project.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    )
 
     if (!project) {
       return res.status(404).json({
@@ -112,11 +114,6 @@ export const updateProject = async (req, res) => {
         message: 'Project not found'
       })
     }
-
-    await project.update({
-      ...req.body,
-      updated_at: new Date(),
-    })
 
     res.json({
       success: true,
@@ -137,7 +134,7 @@ export const updateProject = async (req, res) => {
 // @access  Private (Admin)
 export const deleteProject = async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id)
+    const project = await Project.findByIdAndDelete(req.params.id)
 
     if (!project) {
       return res.status(404).json({
@@ -145,8 +142,6 @@ export const deleteProject = async (req, res) => {
         message: 'Project not found'
       })
     }
-
-    await project.destroy()
 
     res.json({
       success: true,

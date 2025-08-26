@@ -66,45 +66,45 @@ const Home = () => {
             <Plane className="w-24 h-24 mx-auto text-red-500 animate-bounce text-glow-strong" />
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 animate-fadeIn">
+          <h1 className="hero-title font-bold text-white mb-6 animate-fadeIn">
             <span className="block text-glow">DRONE</span>
             <span className="block text-red-500 text-glow-strong">MASTERS</span>
-            <span className="block text-sm md:text-lg font-normal text-gray-300 mt-4 tracking-widest">
+            <span className="block text-xs sm:text-sm md:text-lg font-normal text-gray-300 mt-4 tracking-widest">
               UNMANNED • UNLIMITED • UNSTOPPABLE
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
             Master the skies with cutting-edge drone technology. Join elite pilots in aerial innovation, 
             autonomous flight systems, and next-generation unmanned missions.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 px-4">
             <Link to="/projects">
-              <button className="btn-primary group px-8 py-4 text-lg">
+              <button className="btn-primary group w-full sm:w-auto px-6 sm:px-8 py-4 text-base sm:text-lg">
                 LAUNCH MISSION
-                <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
               </button>
             </Link>
             
             <Link to="/about">
-              <button className="btn-secondary px-8 py-4 text-lg">
+              <button className="btn-secondary w-full sm:w-auto px-6 sm:px-8 py-4 text-base sm:text-lg">
                 INTEL BRIEFING
               </button>
             </Link>
           </div>
 
           {/* Mission Status Indicators */}
-          <div className="flex justify-center space-x-8 text-sm">
-            <div className="flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-8 text-xs sm:text-sm">
+            <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-gray-400">SYSTEMS ONLINE</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
               <span className="text-gray-400">DRONES ACTIVE</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
               <span className="text-gray-400">MISSION READY</span>
             </div>
@@ -120,19 +120,19 @@ const Home = () => {
       </section>
 
       {/* Stats Section - Command Center */}
-      <section className="py-20 relative">
-        <div className="glass-effect-strong rounded-3xl max-w-7xl mx-auto px-8 py-12 relative overflow-hidden">
+      <section className="py-12 sm:py-20 relative">
+        <div className="glass-effect-strong rounded-3xl max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-60"></div>
           
-          <h2 className="text-3xl font-bold text-center text-white mb-12 text-glow">COMMAND CENTER STATUS</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8 sm:mb-12 text-glow">COMMAND CENTER STATUS</h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="mobile-grid">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <div className="card-drone p-6 mb-4 hover:border-red-400 transition-all duration-300">
-                  <stat.icon className={`w-12 h-12 mx-auto mb-4 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
-                  <div className="text-3xl font-bold text-white mb-2 text-glow">{stat.value}</div>
-                  <div className="text-gray-400 text-sm tracking-wide">{stat.label}</div>
+                <div className="card-drone p-4 sm:p-6 mb-4 hover:border-red-400 transition-all duration-300">
+                  <stat.icon className={`w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-4 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                  <div className="text-2xl sm:text-3xl font-bold text-white mb-2 text-glow">{stat.value}</div>
+                  <div className="text-gray-400 text-xs sm:text-sm tracking-wide">{stat.label}</div>
                 </div>
               </div>
             ))}
@@ -141,24 +141,24 @@ const Home = () => {
       </section>
 
       {/* Latest Projects - Active Missions */}
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 space-y-4 sm:space-y-0">
             <div>
-              <h2 className="text-4xl font-bold text-white text-glow mb-2">ACTIVE MISSIONS</h2>
-              <p className="text-gray-400">Current drone development projects</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white text-glow mb-2">ACTIVE MISSIONS</h2>
+              <p className="text-gray-400 text-sm sm:text-base">Current drone development projects</p>
             </div>
             <Link to="/projects">
-              <button className="btn-secondary">
+              <button className="btn-secondary w-full sm:w-auto">
                 <Zap className="w-4 h-4 mr-2" />
                 ALL MISSIONS
               </button>
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="mobile-grid">
             {latestProjects.map((project) => (
-              <div key={project.id} className="card-drone p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div key={project.id} className="card-drone p-4 sm:p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
                 <ProjectCard
                   project={project}
                   onLearnMore={() => {}}

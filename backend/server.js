@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 
 // Import database and routes
-import sequelize from './src/config/database.js'
+import connectMongoDB from './src/config/mongodb.js'
 import authRoutes from './src/routes/auth.js'
 import projectRoutes from './src/routes/projects.js'
 import eventRoutes from './src/routes/events.js'
@@ -109,19 +109,26 @@ app.use('*', (req, res) => {
 // Database connection and server startup
 const startServer = async () => {
   try {
-    await sequelize.authenticate()
-    console.log('Database connection established successfully.')
+    // Attempt to connect to MongoDB Atlas
+    const mongoConnection = await connectMongoDB()
     
-    // Sync database models
-    await sequelize.sync({ force: false })
-    console.log('Database models synchronized.')
+    if (mongoConnection) {
+      console.log('✅ MongoDB Atlas connected successfully')
+    } else {
+      console.log('⚠️  Running without MongoDB connection')
+      console.log('   See MONGODB_SETUP.md for setup instructions')
+    }
     
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`)
-      console.log(`Environment: ${process.env.NODE_ENV}`)
+      console.log(`🚀 Server is running on port ${PORT}`)
+      console.log(`🌍 Environment: ${process.env.NODE_ENV}`)
+      console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`)
+      if (!mongoConnection) {
+        console.log('📋 Configure MongoDB Atlas to enable full functionality')
+      }
     })
   } catch (error) {
-    console.error('Unable to start server:', error)
+    console.error('❌ Unable to start server:', error)
     process.exit(1)
   }
 }
