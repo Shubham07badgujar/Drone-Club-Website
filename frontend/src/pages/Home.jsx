@@ -209,24 +209,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Upcoming Events - Mission Briefings */}
+      {/* Upcoming Events */}
       {upcomingEvents.length > 0 && (
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass-effect rounded-2xl p-12">
+            <div className="glass-effect-strong rounded-2xl p-12">
               <div className="flex items-center justify-between mb-12">
-                <div>
-                  <h2 className="text-4xl font-bold text-white text-glow mb-2">MISSION BRIEFINGS</h2>
-                  <p className="text-gray-400">Upcoming events and training sessions</p>
-                </div>
+                <HolographicDisplay>
+                  <h2 className="text-4xl font-bold text-white text-glow mb-2">UPCOMING EVENTS</h2>
+                  <p className="text-gray-400">Training sessions and competitions</p>
+                </HolographicDisplay>
                 <Link to="/events">
-                  <button className="btn-secondary">VIEW SCHEDULE</button>
+                  <button className="btn-accent">VIEW SCHEDULE</button>
                 </Link>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {upcomingEvents.map((event) => (
-                  <div key={event.id} className="card-drone p-6">
+                  <div key={event.id} className="card-drone p-6 holographic">
                     <EventCard
                       event={event}
                       onRegister={() => {}}
