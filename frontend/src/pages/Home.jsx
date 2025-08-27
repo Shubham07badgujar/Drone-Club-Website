@@ -239,45 +239,53 @@ const Home = () => {
         </section>
       )}
 
-      {/* Recent Blogs - Intel Reports */}
-      {recentBlogs.length > 0 && (
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <h2 className="text-4xl font-bold text-white text-glow mb-2">INTEL REPORTS</h2>
-                <p className="text-gray-400">Latest drone technology insights</p>
-              </div>
-              <Link to="/blog">
-                <button className="btn-secondary">ALL REPORTS</button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {recentBlogs.map((blog) => (
-                <div key={blog.id} className="card-drone p-6">
-                  <BlogCard
-                    blog={blog}
-                    onReadMore={() => {}}
-                  />
-                </div>
-              ))}
-            </div>
+      {/* Recent Blogs */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-12">
+            <HolographicDisplay>
+              <h2 className="text-4xl font-bold text-white text-glow mb-2">MISSION REPORTS</h2>
+              <p className="text-gray-400">Latest updates from the field</p>
+            </HolographicDisplay>
+            <Link to="/blog">
+              <button className="btn-secondary">ALL REPORTS</button>
+            </Link>
           </div>
-        </section>
-      )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {recentBlogs.map((blog) => (
+              <div key={blog.id} className="card-drone p-6 holographic">
+                <BlogCard
+                  blog={blog}
+                  onReadMore={() => {}}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Highlighted Achievement */}
+      {/* Featured Achievement */}
       {highlightedAchievement && (
         <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white text-glow mb-2">ELITE ACHIEVEMENT</h2>
-              <p className="text-gray-400">Outstanding performance recognition</p>
-            </div>
-            
-            <div className="card-drone p-8 max-w-lg mx-auto">
-              <AchievementCard achievement={highlightedAchievement} />
+            <div className="glass-effect-strong rounded-2xl p-12 text-center">
+              <HolographicDisplay>
+                <h2 className="text-4xl font-bold text-white text-glow mb-8">LATEST ACHIEVEMENT</h2>
+              </HolographicDisplay>
+              
+              <div className="card-drone p-8 holographic">
+                <AchievementCard
+                  achievement={highlightedAchievement}
+                  featured={true}
+                />
+              </div>
+              
+              <Link to="/achievements">
+                <button className="btn-primary mt-8">
+                  VIEW ALL ACHIEVEMENTS
+                </button>
+              </Link>
             </div>
           </div>
         </section>
