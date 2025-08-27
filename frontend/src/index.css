@@ -2,19 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark theme is enabled by default */
+/* Professional GCOEJ Drone Club Theme */
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #0a0a0a 100%);
+  background: linear-gradient(135deg, #020617 0%, #0f172a 25%, #1e293b 50%, #334155 75%, #475569 100%);
   background-attachment: fixed;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Animated drone background */
+/* Professional animated background */
 body::before {
   content: '';
   position: fixed;
@@ -23,15 +24,17 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(217, 70, 239, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 60% 40%, rgba(52, 211, 153, 0.03) 0%, transparent 50%);
   background-size: 100% 100%;
   pointer-events: none;
   z-index: -2;
+  animation: energyWave 8s ease-in-out infinite alternate;
 }
 
-/* Circuit pattern overlay */
+/* Professional tech pattern overlay */
 body::after {
   content: '';
   position: fixed;
@@ -39,11 +42,11 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="circuit" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 20h40M20 0v40M10 10h20v20H10z" stroke="%23dc2626" stroke-width="0.5" fill="none" opacity="0.1"/></pattern></defs><rect width="200" height="200" fill="url(%23circuit)"/></svg>');
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="techPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f97316" opacity="0.1"/><path d="M0 25h50M25 0v50" stroke="%230ea5e9" stroke-width="0.2" opacity="0.1"/><rect x="20" y="20" width="10" height="10" fill="none" stroke="%23d946ef" stroke-width="0.2" opacity="0.08"/></pattern></defs><rect width="200" height="200" fill="url(%23techPattern)"/></svg>');
   background-size: 200px 200px;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 @layer base {
@@ -53,66 +56,164 @@ body::after {
 }
 
 @layer components {
-  /* Mobile-first responsive components */
+  /* Professional GCOEJ Drone Club Components */
   
-  /* Glass effect for components */
+  /* Professional glass effect */
   .glass-effect {
-    background: rgba(26, 26, 26, 0.8);
+    background: rgba(2, 6, 23, 0.8);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(220, 38, 38, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-
-  /* Enhanced glass effect with red glow */
-  .glass-effect-strong {
-    background: rgba(10, 10, 10, 0.9);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(220, 38, 38, 0.3);
+    border: 1px solid rgba(249, 115, 22, 0.2);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(220, 38, 38, 0.1);
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(249, 115, 22, 0.05);
   }
 
-  /* Mobile-optimized button styles */
+  /* Enhanced professional glass effect */
+  .glass-effect-strong {
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(249, 115, 22, 0.1),
+      inset 0 1px 0 rgba(249, 115, 22, 0.1);
+  }
+
+  /* Professional primary button */
   .btn-primary {
-    background: linear-gradient(135deg, #dc2626, #991b1b);
-    border: 1px solid #dc2626;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: 1px solid #f97316;
     @apply text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 relative overflow-hidden;
-    min-height: 44px; /* iOS recommended touch target */
+    min-height: 44px;
+    box-shadow: 
+      0 4px 15px rgba(249, 115, 22, 0.3),
+      0 0 20px rgba(249, 115, 22, 0.1);
   }
 
-  /* Touch devices get larger touch targets */
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+    box-shadow: 
+      0 6px 20px rgba(249, 115, 22, 0.4),
+      0 0 30px rgba(249, 115, 22, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Professional secondary button */
+  .btn-secondary {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    border: 1px solid #0ea5e9;
+    @apply text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 relative overflow-hidden;
+    min-height: 44px;
+    box-shadow: 
+      0 4px 15px rgba(14, 165, 233, 0.3),
+      0 0 20px rgba(14, 165, 233, 0.1);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    box-shadow: 
+      0 6px 20px rgba(14, 165, 233, 0.4),
+      0 0 30px rgba(14, 165, 233, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Professional accent button */
+  .btn-accent {
+    background: linear-gradient(135deg, #d946ef, #c026d3);
+    border: 1px solid #d946ef;
+    @apply text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 relative overflow-hidden;
+    min-height: 44px;
+    box-shadow: 
+      0 4px 15px rgba(217, 70, 239, 0.3),
+      0 0 20px rgba(217, 70, 239, 0.1);
+  }
+
+  .btn-accent:hover {
+    background: linear-gradient(135deg, #c026d3, #a21caf);
+    box-shadow: 
+      0 6px 20px rgba(217, 70, 239, 0.4),
+      0 0 30px rgba(217, 70, 239, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Touch-friendly adjustments */
   @media (hover: none) {
-    .btn-primary {
+    .btn-primary, .btn-secondary, .btn-accent {
       @apply py-4 px-8;
       min-height: 48px;
     }
   }
 
-  .btn-primary::before {
+  /* Professional drone card styles */
+  .card-drone {
+    background: linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(30, 41, 59, 0.8));
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    border-radius: 16px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(249, 115, 22, 0.05),
+      inset 0 1px 0 rgba(249, 115, 22, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-drone::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #f97316, transparent);
+    opacity: 0.6;
   }
 
-  .btn-primary:hover::before {
-    left: 100%;
+  .card-drone:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(249, 115, 22, 0.2),
+      inset 0 1px 0 rgba(249, 115, 22, 0.2);
   }
 
-  .btn-primary:hover {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+  /* Professional tech glow text */
+  .text-glow {
+    text-shadow: 
+      0 0 10px rgba(249, 115, 22, 0.5),
+      0 0 20px rgba(249, 115, 22, 0.3),
+      0 0 30px rgba(249, 115, 22, 0.2);
   }
 
-  /* No hover effects on touch devices */
-  @media (hover: none) {
-    .btn-primary:hover {
-      transform: none;
+  .text-glow-secondary {
+    text-shadow: 
+      0 0 10px rgba(14, 165, 233, 0.5),
+      0 0 20px rgba(14, 165, 233, 0.3),
+      0 0 30px rgba(14, 165, 233, 0.2);
+  }
+
+  .text-glow-accent {
+    text-shadow: 
+      0 0 10px rgba(217, 70, 239, 0.5),
+      0 0 20px rgba(217, 70, 239, 0.3),
+      0 0 30px rgba(217, 70, 239, 0.2);
+  }
+
+  /* Professional holographic effect */
+  .holographic {
+    background: linear-gradient(
+      45deg,
+      rgba(249, 115, 22, 0.1) 0%,
+      rgba(14, 165, 233, 0.1) 25%,
+      rgba(217, 70, 239, 0.1) 50%,
+      rgba(52, 211, 153, 0.1) 75%,
+      rgba(249, 115, 22, 0.1) 100%
+    );
+    background-size: 400% 400%;
+    animation: hologram 6s ease-in-out infinite;
+  }
       box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
     }
   }

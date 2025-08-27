@@ -146,7 +146,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-primary-400 rounded-full p-1">
@@ -209,24 +209,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Upcoming Events - Mission Briefings */}
+      {/* Upcoming Events */}
       {upcomingEvents.length > 0 && (
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass-effect rounded-2xl p-12">
+            <div className="glass-effect-strong rounded-2xl p-12">
               <div className="flex items-center justify-between mb-12">
-                <div>
-                  <h2 className="text-4xl font-bold text-white text-glow mb-2">MISSION BRIEFINGS</h2>
-                  <p className="text-gray-400">Upcoming events and training sessions</p>
-                </div>
+                <HolographicDisplay>
+                  <h2 className="text-4xl font-bold text-white text-glow mb-2">UPCOMING EVENTS</h2>
+                  <p className="text-gray-400">Training sessions and competitions</p>
+                </HolographicDisplay>
                 <Link to="/events">
-                  <button className="btn-secondary">VIEW SCHEDULE</button>
+                  <button className="btn-accent">VIEW SCHEDULE</button>
                 </Link>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {upcomingEvents.map((event) => (
-                  <div key={event.id} className="card-drone p-6">
+                  <div key={event.id} className="card-drone p-6 holographic">
                     <EventCard
                       event={event}
                       onRegister={() => {}}
@@ -239,71 +239,86 @@ const Home = () => {
         </section>
       )}
 
-      {/* Recent Blogs - Intel Reports */}
-      {recentBlogs.length > 0 && (
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <h2 className="text-4xl font-bold text-white text-glow mb-2">INTEL REPORTS</h2>
-                <p className="text-gray-400">Latest drone technology insights</p>
-              </div>
-              <Link to="/blog">
-                <button className="btn-secondary">ALL REPORTS</button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {recentBlogs.map((blog) => (
-                <div key={blog.id} className="card-drone p-6">
-                  <BlogCard
-                    blog={blog}
-                    onReadMore={() => {}}
-                  />
-                </div>
-              ))}
-            </div>
+      {/* Recent Blogs */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-12">
+            <HolographicDisplay>
+              <h2 className="text-4xl font-bold text-white text-glow mb-2">MISSION REPORTS</h2>
+              <p className="text-gray-400">Latest updates from the field</p>
+            </HolographicDisplay>
+            <Link to="/blog">
+              <button className="btn-secondary">ALL REPORTS</button>
+            </Link>
           </div>
-        </section>
-      )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {recentBlogs.map((blog) => (
+              <div key={blog.id} className="card-drone p-6 holographic">
+                <BlogCard
+                  blog={blog}
+                  onReadMore={() => {}}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Highlighted Achievement */}
+      {/* Featured Achievement */}
       {highlightedAchievement && (
         <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white text-glow mb-2">ELITE ACHIEVEMENT</h2>
-              <p className="text-gray-400">Outstanding performance recognition</p>
-            </div>
-            
-            <div className="card-drone p-8 max-w-lg mx-auto">
-              <AchievementCard achievement={highlightedAchievement} />
+            <div className="glass-effect-strong rounded-2xl p-12 text-center">
+              <HolographicDisplay>
+                <h2 className="text-4xl font-bold text-white text-glow mb-8">LATEST ACHIEVEMENT</h2>
+              </HolographicDisplay>
+              
+              <div className="card-drone p-8 holographic">
+                <AchievementCard
+                  achievement={highlightedAchievement}
+                  featured={true}
+                />
+              </div>
+              
+              <Link to="/achievements">
+                <button className="btn-primary mt-8">
+                  VIEW ALL ACHIEVEMENTS
+                </button>
+              </Link>
             </div>
           </div>
         </section>
       )}
 
-      {/* CTA Section - Recruitment */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-drone-red-600 to-drone-red-800 opacity-90"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-16 left-16 w-32 h-32 bg-white rounded-full filter blur-2xl opacity-10 animate-pulseGlow"></div>
-          <div className="absolute bottom-16 right-16 w-48 h-48 bg-white rounded-full filter blur-3xl opacity-5 animate-pulseGlow delay-1000"></div>
-        </div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <Plane className="w-16 h-16 mx-auto text-white mb-8 animate-hoverDrone" />
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 text-glow-strong">
-            READY FOR TAKEOFF?
-          </h2>
-          <p className="text-xl text-gray-100 mb-12 max-w-2xl mx-auto">
-            Join the elite squadron of drone pilots and engineers. Shape the future of autonomous flight technology.
-          </p>
-          <Link to="/about">
-            <button className="bg-white text-drone-red-600 px-12 py-4 text-lg font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-              ENLIST NOW
-            </button>
-          </Link>
+      {/* Call to Action */}
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="glass-effect-strong rounded-2xl p-12">
+            <HolographicDisplay>
+              <ProfessionalDrone className="w-16 h-16 mx-auto mb-6 text-primary-500 animate-hover-drone" />
+              <h2 className="text-4xl font-bold text-white text-glow mb-6">JOIN GCOEJ DRONE CLUB</h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Ready to soar to new heights? Join our elite team of drone engineers, 
+                researchers, and pilots. Be part of the future of aerial technology.
+              </p>
+            </HolographicDisplay>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact">
+                <button className="btn-primary group px-8 py-4 text-lg">
+                  GET STARTED
+                  <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
+                </button>
+              </Link>
+              
+              <Link to="/about">
+                <button className="btn-secondary px-8 py-4 text-lg">
+                  LEARN MORE
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
