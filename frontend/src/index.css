@@ -214,9 +214,6 @@ body::after {
     background-size: 400% 400%;
     animation: hologram 6s ease-in-out infinite;
   }
-      box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
-    }
-  }
 
   /* Active state for touch devices */
   .btn-primary:active {
