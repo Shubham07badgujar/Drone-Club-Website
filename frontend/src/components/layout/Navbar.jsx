@@ -31,8 +31,8 @@ const Navbar = () => {
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-drone-electric-500 rounded-full opacity-80 animate-pulse"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold text-white text-glow">GCOEJ</span>
-              <span className="text-xs text-gray-400 tracking-wider">DRONE CLUB</span>
+              <span className="text-xl font-bold text-white text-glow">TEAM THIRD AXIS</span>
+              <span className="text-xs text-gray-400 tracking-wider">GCOEJ DRONE CLUB</span>
             </div>
           </Link>
 

@@ -20,15 +20,15 @@ const Home = () => {
   const { blogs } = useBlogs()
   const { achievements } = useAchievements()
 
-  // Professional GCOEJ Drone Club stats
+  // Team Third Axis - GCOEJ Drone Club stats
   const stats = [
-    { icon: Plane, label: 'Active Drones', value: '15+', color: 'text-primary-400' },
-    { icon: Users, label: 'Club Members', value: '85+', color: 'text-secondary-400' },
-    { icon: Target, label: 'Missions Completed', value: '40+', color: 'text-accent-400' },
-    { icon: Award, label: 'Achievements', value: '12+', color: 'text-drone-electric-400' },
-    { icon: Cpu, label: 'AI Projects', value: '8+', color: 'text-drone-warning-400' },
-    { icon: Radio, label: 'Flight Hours', value: '500+', color: 'text-primary-300' },
-    { icon: Shield, label: 'Safety Record', value: '100%', color: 'text-drone-electric-500' },
+    { icon: Users, label: 'Club Members', value: '60+', color: 'text-secondary-400' },
+    { icon: Award, label: 'AIR Rank SAE 2024', value: '5th', color: 'text-drone-electric-400' },
+    { icon: Target, label: 'SIH 2024 Regional', value: '1st', color: 'text-accent-400' },
+    { icon: Plane, label: 'National Comps', value: '2', color: 'text-primary-400' },
+    { icon: Radio, label: 'State Comps', value: '2', color: 'text-primary-300' },
+    { icon: Cpu, label: 'SAE Aerothon', value: '2025', color: 'text-drone-warning-400' },
+    { icon: Shield, label: 'Defense Focus', value: '100%', color: 'text-drone-electric-500' },
   ]
 
   const latestProjects = projects.slice(0, 3)
@@ -92,16 +92,16 @@ const Home = () => {
             
             <h1 className="hero-title font-bold text-white mb-6 animate-fadeIn">
               <span className="block text-glow text-4xl sm:text-6xl md:text-8xl">GCOEJ</span>
-              <span className="block text-primary-500 text-glow text-2xl sm:text-4xl md:text-6xl">DRONE CLUB</span>
+              <span className="block text-primary-500 text-glow text-2xl sm:text-4xl md:text-6xl">TEAM THIRD AXIS</span>
               <span className="block text-xs sm:text-sm md:text-lg font-normal text-gray-300 mt-4 tracking-widest animate-tech-glow">
                 INNOVATE • ELEVATE • DOMINATE
               </span>
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
-              Government College of Engineering Jalgaon's premier drone technology hub. 
-              Where engineering excellence meets aerial innovation through cutting-edge research, 
-              autonomous systems, and next-generation UAV development.
+              Team Third Axis is the official drone club of the Government College of Engineering, Jalgaon. 
+              We are a dynamic group of students focused on advancing drone technology and UAV development through 
+              cutting-edge autonomous systems and engineering excellence.
             </p>
           </HolographicDisplay>
           
@@ -155,12 +155,167 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Team Third Axis - About Section */}
+      <section className="py-16 sm:py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="glass-effect-strong rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+            {/* Background effects */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-60"></div>
+            <div className="absolute inset-0 opacity-5">
+              <TechPattern />
+            </div>
+            
+            <div className="relative z-10">
+              <HolographicDisplay>
+                <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-8 text-glow">
+                  ABOUT TEAM THIRD AXIS
+                </h2>
+              </HolographicDisplay>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+                {/* Left side - Mission */}
+                <div className="space-y-6">
+                  <div className="card-drone p-6 holographic">
+                    <h3 className="text-xl sm:text-2xl font-bold text-primary-400 mb-4 text-glow">Our Mission</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                      Team Third Axis is the official drone club of the Government College of Engineering, Jalgaon. 
+                      We are a dynamic group of students focused on advancing drone technology and UAV development. 
+                      Our mission is to design cutting-edge, autonomous drones and provide students with hands-on 
+                      experience in building and programming them.
+                    </p>
+                  </div>
+                  
+                  <div className="card-drone p-6 holographic">
+                    <h3 className="text-xl sm:text-2xl font-bold text-secondary-400 mb-4 text-glow">Innovation Focus</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                      We aim to pioneer innovative solutions through engineering excellence and lead in the field 
+                      of drone technology. We actively participate in drone competitions and have a proven track 
+                      record of success, including competing in SAE Aerothon 2025.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Right side - Impact */}
+                <div className="space-y-6">
+                  <div className="card-drone p-6 holographic">
+                    <h3 className="text-xl sm:text-2xl font-bold text-accent-400 mb-4 text-glow">Our Impact</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base mb-4">
+                      The club has a strong presence, with over <span className="text-primary-400 font-bold">60 members</span>, 
+                      and has organized <span className="text-secondary-400 font-bold">two national</span> and 
+                      <span className="text-accent-400 font-bold"> two state-level</span> drone competitions to promote UAV innovation.
+                    </p>
+                    
+                    <div className="flex items-center space-x-4 mt-4">
+                      <div className="w-3 h-3 bg-primary-500 rounded-full animate-signal-pulse"></div>
+                      <span className="text-gray-400 text-sm">SAE Aerothon 2025 Participant</span>
+                    </div>
+                  </div>
+                  
+                  <div className="card-drone p-6 holographic">
+                    <h3 className="text-xl sm:text-2xl font-bold text-drone-electric-400 mb-4 text-glow">Defense Applications</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                      Specializing in advanced drone technology designed for defense applications, 
+                      disaster management, and real-time surveillance systems with cutting-edge automation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section className="py-16 sm:py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <HolographicDisplay>
+            <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-12 text-glow">
+              OUR ACHIEVEMENTS
+            </h2>
+          </HolographicDisplay>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* SAE Aerothon 2024 */}
+            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center mr-4">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-primary-400 text-glow">SAE Aerothon 2024</h3>
+                  <p className="text-gray-400 text-sm">National Competition</p>
+                </div>
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                The team participated in the SAE Aerothon India 2024, a national-level competition focused on 
+                designing, building, and piloting Uncrewed Aircraft Systems (UAS). Competing against top institutions, 
+                Team Third Axis secured an <span className="text-primary-400 font-bold">All India Rank (AIR) of 5 in Phase 1</span>.
+              </p>
+            </div>
+            
+            {/* Smart India Hackathon 2024 */}
+            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-700 rounded-lg flex items-center justify-center mr-4">
+                  <Target className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-secondary-400 text-glow">Smart India Hackathon 2024</h3>
+                  <p className="text-gray-400 text-sm">Regional Winner</p>
+                </div>
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                Team Third Axis secured the <span className="text-secondary-400 font-bold">1st rank at the regional level</span> 
+                in the Smart India Hackathon (SIH) 2024. Their winning project was a drone-based UAV system for disaster 
+                management, enabling aerial surveillance, real-time data collection, and efficient supply delivery.
+              </p>
+            </div>
+            
+            {/* PIWOT 2024 */}
+            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-700 rounded-lg flex items-center justify-center mr-4">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-accent-400 text-glow">PIWOT 2024</h3>
+                  <p className="text-gray-400 text-sm">Defense Technology</p>
+                </div>
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                At PIWOT 2024, held at the Jio Convention Centre in Mumbai, Team Third Axis demonstrated their 
+                advanced drone technology designed for applications in defense. They also engaged with leaders 
+                and investors to explore collaboration opportunities.
+              </p>
+            </div>
+            
+            {/* DIPEX 2025 */}
+            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-drone-electric-500 to-drone-electric-700 rounded-lg flex items-center justify-center mr-4">
+                  <Cpu className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-drone-electric-400 text-glow">DIPEX 2025</h3>
+                  <p className="text-gray-400 text-sm">State Level Qualifier</p>
+                </div>
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                In DIPEX 2025, a state-level exhibition-cum-competition, Team Third Axis successfully 
+                <span className="text-drone-electric-400 font-bold"> qualified for the regional level round</span> 
+                under the theme of "Defense and Cyber Security".
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Professional Stats Section */}
       <section className="py-12 sm:py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <HolographicDisplay>
             <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8 sm:mb-12 text-glow">
-              COMMAND CENTER STATUS
+              TEAM THIRD AXIS STATUS
             </h2>
           </HolographicDisplay>
           
@@ -297,10 +452,10 @@ const Home = () => {
           <div className="glass-effect-strong rounded-2xl p-12">
             <HolographicDisplay>
               <ProfessionalDrone className="w-16 h-16 mx-auto mb-6 text-primary-500 animate-hover-drone" />
-              <h2 className="text-4xl font-bold text-white text-glow mb-6">JOIN GCOEJ DRONE CLUB</h2>
+              <h2 className="text-4xl font-bold text-white text-glow mb-6">JOIN TEAM THIRD AXIS</h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
                 Ready to soar to new heights? Join our elite team of drone engineers, 
-                researchers, and pilots. Be part of the future of aerial technology.
+                researchers, and pilots at GCOEJ. Be part of the future of aerial technology and defense innovation.
               </p>
             </HolographicDisplay>
             
