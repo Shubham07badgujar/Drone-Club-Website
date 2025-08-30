@@ -189,7 +189,7 @@ function Home() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
                 >
-                  <div className="card-drone p-6 border-l-4 border-primary-500">
+                  <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-6 border-l-4 border-primary-500 hover:bg-white/10 transition-all duration-300">
                     <h3 className="text-2xl font-bold text-primary-400 mb-4">Our Mission</h3>
                     <p className="text-gray-300 leading-relaxed">
                       Team Third Axis is dedicated to advancing drone technology and UAV development. 
@@ -198,7 +198,7 @@ function Home() {
                     </p>
                   </div>
                   
-                  <div className="card-drone p-6 border-l-4 border-secondary-500">
+                  <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-6 border-l-4 border-secondary-500 hover:bg-white/10 transition-all duration-300">
                     <h3 className="text-2xl font-bold text-secondary-400 mb-4">Innovation Focus</h3>
                     <p className="text-gray-300 leading-relaxed">
                       We pioneer innovative solutions through engineering excellence and lead in 
