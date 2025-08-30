@@ -37,72 +37,80 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-900 px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-dark-900 via-dark-800 to-blue-900 px-4">
+      <Card className="w-full max-w-md bg-dark-800/50 backdrop-blur-lg border border-dark-600">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Admin Login</h1>
-          <p className="text-gray-400">Sign in to access the admin dashboard</p>
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Lock className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Team Third Axis</h1>
+          <p className="text-gray-400">Admin Portal Access</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-              Email
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input-field pl-10 w-full"
-                placeholder="admin@droneclub.com"
+                className="w-full pl-12 pr-4 py-3 bg-dark-700/50 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="teamthirdaxis@gcoej.ac.in"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="input-field pl-10 pr-10 w-full"
+                className="w-full pl-12 pr-12 py-3 bg-dark-700/50 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Enter your password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
             loading={loading}
             disabled={!formData.email || !formData.password}
           >
-            Sign In
+            {loading ? 'Signing In...' : 'Access Admin Panel'}
           </Button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-px bg-gray-600 flex-1"></div>
+            <span className="px-3 text-xs text-gray-500">Official Access Only</span>
+            <div className="h-px bg-gray-600 flex-1"></div>
+          </div>
           <p className="text-xs text-gray-500">
-            Demo credentials: admin@droneclub.com / password123
+            Authorized personnel only • Team Third Axis Drone Club
           </p>
         </div>
       </Card>

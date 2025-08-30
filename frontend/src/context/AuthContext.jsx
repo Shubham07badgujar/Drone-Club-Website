@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   // Check if user is authenticated on app load
   useEffect(() => {
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('adminToken') // Updated to match useTeamYears
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
       getCurrentUser()
@@ -30,10 +30,12 @@ export const AuthProvider = ({ children }) => {
   const getCurrentUser = async () => {
     try {
       const response = await axios.get('/api/auth/me')
-      setUser(response.data.user)
+      if (response.data.success) {
+        setUser(response.data.admin)
+      }
     } catch (error) {
       console.error('Failed to get current user:', error)
-      localStorage.removeItem('authToken')
+      localStorage.removeItem('adminToken') // Updated to match useTeamYears
       delete axios.defaults.headers.common['Authorization']
     } finally {
       setLoading(false)
@@ -43,16 +45,27 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setLoading(true)
+      console.log('🔄 Attempting login for:', email)
+      
       const response = await axios.post('/api/auth/login', { email, password })
-      const { token, user } = response.data
       
-      localStorage.setItem('authToken', token)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      setUser(user)
-      
-      toast.success('Login successful!')
-      return { success: true }
+      if (response.data.success) {
+        const { token, admin } = response.data
+        
+        console.log('✅ Login successful, storing token')
+        localStorage.setItem('adminToken', token) // Updated to match useTeamYears
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        setUser(admin)
+        
+        toast.success('Login successful!')
+        return { success: true }
+      } else {
+        console.error('❌ Login failed:', response.data.message)
+        toast.error(response.data.message || 'Login failed')
+        return { success: false, message: response.data.message }
+      }
     } catch (error) {
+      console.error('❌ Login error:', error.response?.data || error.message)
       const message = error.response?.data?.message || 'Login failed'
       toast.error(message)
       return { success: false, message }
@@ -62,7 +75,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = () => {
-    localStorage.removeItem('authToken')
+    console.log('🔄 Logging out user')
+    localStorage.removeItem('adminToken') // Updated to match useTeamYears
     delete axios.defaults.headers.common['Authorization']
     setUser(null)
     toast.success('Logged out successfully')

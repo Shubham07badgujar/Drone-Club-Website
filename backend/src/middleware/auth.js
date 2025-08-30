@@ -23,7 +23,7 @@ export const authenticateToken = async (req, res, next) => {
       })
     }
 
-    req.user = {
+    req.admin = {
       id: admin._id,
       email: admin.email,
       role: admin.role,
@@ -54,7 +54,7 @@ export const authenticateToken = async (req, res, next) => {
 }
 
 export const requireAdmin = (req, res, next) => {
-  if (!req.user || (req.user.role !== 'admin' && req.user.role !== 'super_admin')) {
+  if (!req.admin || (req.admin.role !== 'admin' && req.admin.role !== 'super_admin')) {
     return res.status(403).json({
       success: false,
       message: 'Admin access required'
@@ -64,7 +64,7 @@ export const requireAdmin = (req, res, next) => {
 }
 
 export const requireSuperAdmin = (req, res, next) => {
-  if (!req.user || req.user.role !== 'super_admin') {
+  if (!req.admin || req.admin.role !== 'super_admin') {
     return res.status(403).json({
       success: false,
       message: 'Super admin access required'

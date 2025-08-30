@@ -9,7 +9,7 @@ import {
   updateTeamMember,
   deleteTeamMember
 } from '../controllers/teamYearController.js'
-import { authenticateToken, requireAdmin } from '../middleware/auth.js'
+import { authenticateAdmin, requirePermission } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -18,13 +18,13 @@ router.get('/', getTeamYears)
 router.get('/:year', getTeamYear)
 
 // Admin routes
-router.post('/', authenticateToken, requireAdmin, createTeamYear)
-router.put('/:year', authenticateToken, requireAdmin, updateTeamYear)
-router.delete('/:year', authenticateToken, requireAdmin, deleteTeamYear)
+router.post('/', authenticateAdmin, requirePermission(['manage-content', 'write']), createTeamYear)
+router.put('/:year', authenticateAdmin, requirePermission(['manage-content', 'write']), updateTeamYear)
+router.delete('/:year', authenticateAdmin, requirePermission(['delete']), deleteTeamYear)
 
 // Team member management routes
-router.post('/:year/members', authenticateToken, requireAdmin, addTeamMember)
-router.put('/:year/members/:memberId', authenticateToken, requireAdmin, updateTeamMember)
-router.delete('/:year/members/:memberId', authenticateToken, requireAdmin, deleteTeamMember)
+router.post('/:year/members', authenticateAdmin, requirePermission(['manage-content', 'write']), addTeamMember)
+router.put('/:year/members/:memberId', authenticateAdmin, requirePermission(['manage-content', 'write']), updateTeamMember)
+router.delete('/:year/members/:memberId', authenticateAdmin, requirePermission(['manage-content', 'delete']), deleteTeamMember)
 
 export default router

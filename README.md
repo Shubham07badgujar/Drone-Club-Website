@@ -1,42 +1,61 @@
 # 🚁 Drone Club Website
 
-A comprehensive full-stack web application for a drone club featuring a modern React frontend, robust Node.js backend, and PostgreSQL database. Built with cutting-edge technologies and best practices for scalability, security, and user experience.
+A modern, full-stack web application for managing a drone club with features for team management, events, projects, blog posts, achievements, and admin panel functionality.
 
-![Drone Club Website](https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&h=400&fit=crop)
+## 🌟 Features
 
-## 🌟 Key Highlights
+### 🏠 **Public Features**
+- **Home Page**: Modern landing page with animated drone backgrounds and hero section
+- **Projects Showcase**: Display club projects with detailed descriptions, technologies used, and images
+- **Events Management**: Upcoming and past events with registration capabilities
+- **Blog System**: Latest news, tutorials, and announcements from the club
+- **Team Directory**: Year-based team member organization with roles and social links
+- **Achievements Gallery**: Club accomplishments, awards, and milestones
+- **About Section**: Club information, mission, and vision
 
-- **Modern Tech Stack**: React 18 + Vite, Node.js + Express, PostgreSQL + Sequelize
-- **Security First**: JWT authentication, input validation, rate limiting, CORS protection
-- **Responsive Design**: Mobile-first approach with dark theme and smooth animations
-- **Developer Experience**: Hot reload, ESLint, comprehensive error handling
-- **Production Ready**: Environment configurations, database migrations, deployment guides
+### 🔐 **Admin Features**
+- **Secure Admin Login**: JWT-based authentication system
+- **Admin Dashboard**: Centralized control panel for all content management
+- **Team Management**: Add/edit/delete team members and organize by years
+- **Event Management**: Create and manage events with registration tracking
+- **Project Management**: Upload and manage project portfolios
+- **Blog Management**: Create, edit, and publish blog posts
+- **Achievement Management**: Add and showcase club achievements
+- **Department Management**: Organize team structure and leadership
 
-## 🚀 Features Overview
+## 🛠️ Tech Stack
 
-### 🎨 Frontend Features
-- **⚡ Modern React with Vite** - Lightning-fast development with Hot Module Replacement
-- **🎨 Tailwind CSS** - Utility-first CSS with dark theme, responsive design, and custom animations
-- **🧭 React Router v6** - Declarative client-side routing with protected routes
-- **🔐 JWT Authentication** - Secure token-based authentication with auto-refresh
-- **🪝 Custom Hooks** - Reusable data fetching hooks with caching and error handling
-- **📱 Responsive Design** - Mobile-first approach with breakpoint-specific optimizations
-- **🔔 Toast Notifications** - Real-time user feedback with react-hot-toast
-- **♿ Accessibility** - WCAG 2.1 compliant with keyboard navigation support
-- **🎭 Framer Motion** - Smooth page transitions and micro-interactions
-- **🎯 Component Library** - Reusable UI components with consistent design system
+### **Frontend**
+- **React 18** - Modern React with hooks and functional components
+- **Tailwind CSS** - Utility-first CSS framework for responsive design
+- **Vite** - Fast build tool and development server
+- **React Router DOM** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **React Hook Form** - Form handling and validation
+- **React Hot Toast** - Toast notifications
+- **Framer Motion** - Smooth animations and transitions
+- **React Icons** - Icon library
+- **Lucide React** - Modern icon set
 
-### 🛠️ Backend Features
-- **🚀 Express.js API** - RESTful API with middleware architecture
-- **🐘 PostgreSQL + Sequelize** - Robust relational database with ORM
-- **🔒 JWT Authentication** - Stateless authentication with role-based access control
-- **✅ Input Validation** - Comprehensive Joi schema validation
-- **📁 File Upload** - Multer integration with file type and size validation
-- **🛡️ Security Suite** - Helmet headers, CORS, rate limiting, SQL injection protection
-- **📊 Request Logging** - Morgan HTTP request logger with custom formats
-- **🗜️ Compression** - Gzip compression for optimized response sizes
-- **🔄 Database Migrations** - Version-controlled database schema changes
-- **🌱 Database Seeding** - Automated sample data generation for development
+### **Backend**
+- **Node.js** - JavaScript runtime environment
+- **Express.js** - Web application framework
+- **MongoDB Atlas** - Cloud database service
+- **Mongoose** - MongoDB object modeling
+- **JWT (JSON Web Tokens)** - Authentication and authorization
+- **bcryptjs** - Password hashing
+- **Helmet** - Security middleware
+- **CORS** - Cross-origin resource sharing
+- **Morgan** - HTTP request logger
+- **Express Rate Limit** - Rate limiting middleware
+- **Compression** - Response compression
+- **Multer** - File upload handling
+
+### **Development Tools**
+- **Nodemon** - Development server auto-restart
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **dotenv** - Environment variables management
 
 ### 📄 Pages & Functionality
 
@@ -113,308 +132,138 @@ A comprehensive full-stack web application for a drone club featuring a modern R
 - **Role Management**: Admin permissions and access control
 - **System Health**: Server status and performance monitoring
 
-## 🛠️ Prerequisites & Requirements
+## � Installation Guide
 
-### System Requirements
-- **Node.js**: Version 18.0.0 or higher ([Download](https://nodejs.org/))
-- **PostgreSQL**: Version 12.0 or higher ([Download](https://www.postgresql.org/download/))
-- **Git**: Latest version ([Download](https://git-scm.com/downloads))
-- **Package Manager**: npm (comes with Node.js) or yarn
+### **Prerequisites**
+- Node.js (v16 or higher)
+- npm or yarn package manager
+- MongoDB Atlas account
+- Git
 
-### Recommended Development Tools
-- **VS Code**: With recommended extensions (ESLint, Prettier, Tailwind CSS IntelliSense)
-- **Postman**: For API testing ([Download](https://www.postman.com/downloads/))
-- **pgAdmin**: PostgreSQL administration tool ([Download](https://www.pgadmin.org/download/))
-
-### Hardware Requirements
-- **RAM**: Minimum 8GB (16GB recommended for smooth development)
-- **Storage**: At least 2GB free space for dependencies and database
-- **CPU**: Modern multi-core processor for optimal build performance
-
-## 🎯 Quick Start Guide
-
-### 1. Repository Setup
-
+### **1. Clone the Repository**
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/Drone-Club-Website.git
-cd Drone-Club-Website
-
-# Check Node.js version
-node --version  # Should be 18.0.0+
-npm --version   # Should be 8.0.0+
+git clone https://github.com/yourusername/drone-club-website.git
+cd drone-club-website
 ```
 
-### 2. Frontend Installation
-
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Install additional development tools (optional)
-npm install -D @types/node  # For better IDE support
-```
-
-**Expected Dependencies:**
-- React 18.2.0 with React DOM
-- Vite 4.4.5 for build tooling
-- Tailwind CSS 3.3.3 with plugins
-- React Router DOM 6.15.0
-- Axios for HTTP requests
-- React Hot Toast for notifications
-- Framer Motion for animations
-- Lucide React for icons
-
-### 3. Backend Installation
-
+### **2. Backend Setup**
 ```bash
 # Navigate to backend directory
-cd ../backend
+cd backend
 
 # Install dependencies
 npm install
 
-# Install global tools (optional)
-npm install -g nodemon  # For automatic server restarts
-npm install -g sequelize-cli  # For database operations
-```
-
-**Expected Dependencies:**
-- Express 4.18.2 web framework
-- Sequelize 6.32.1 ORM with PostgreSQL driver
-- JWT for authentication
-- Joi for validation
-- Multer for file uploads
-- Security middleware (Helmet, CORS, Rate limiting)
-
-### 4. Database Configuration
-
-#### PostgreSQL Installation & Setup
-
-**Windows:**
-1. Download PostgreSQL installer from official website
-2. Run installer with default settings
-3. Remember the superuser password you set
-4. Add PostgreSQL bin directory to system PATH
-
-**macOS (using Homebrew):**
-```bash
-brew install postgresql
-brew services start postgresql
-createdb drone_club_db
-```
-
-**Linux (Ubuntu/Debian):**
-```bash
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-sudo -u postgres createdb drone_club_db
-```
-
-#### Database Creation
-```sql
--- Connect to PostgreSQL as superuser
-psql -U postgres
-
--- Create database
-CREATE DATABASE drone_club_db;
-
--- Create user (optional, for security)
-CREATE USER drone_club_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE drone_club_db TO drone_club_user;
-
--- Exit PostgreSQL
-\q
-```
-
-### 5. Environment Configuration
-
-#### Backend Environment Setup
-
-```bash
-# In backend directory
+# Create environment file
 cp .env.example .env
+
+# Edit .env file with your configuration
+# See Environment Variables section below
 ```
 
-**Configure `.env` file:**
+### **3. Frontend Setup**
+```bash
+# Navigate to frontend directory
+cd ../frontend
+
+# Install dependencies
+npm install
+```
+
+### **4. Environment Variables**
+Create a `.env` file in the backend directory with the following variables:
+
 ```env
-# Server Configuration
-NODE_ENV=development
-PORT=5000
+# MongoDB Atlas Configuration
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database-name?retryWrites=true&w=majority
 
 # Database Configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=drone_club_db
-DB_USER=postgres  # or drone_club_user if created
-DB_PASSWORD=your_password
+DB_NAME=team-third-axis-db
 
-# JWT Configuration
-JWT_SECRET=your_super_secure_jwt_secret_key_min_32_characters
-JWT_EXPIRE=7d
-
-# File Upload Configuration
-MAX_FILE_SIZE=5242880  # 5MB in bytes
-UPLOAD_PATH=./uploads
-
-# CORS Configuration
+# Server Configuration
+PORT=5000
+NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
 
-# Security Configuration (optional)
-RATE_LIMIT_WINDOW_MS=900000  # 15 minutes
-RATE_LIMIT_MAX=100  # requests per window
+# JWT Configuration (CHANGE IN PRODUCTION!)
+JWT_SECRET=your-super-secure-jwt-secret-key-here
+
+# Admin Configuration
+ADMIN_EMAIL=admin@droneclub.com
+ADMIN_PASSWORD=YourSecureAdminPassword123!
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=1000
 ```
 
-#### Frontend Environment Setup (Optional)
-
+### **5. Database Setup**
 ```bash
-# In frontend directory
-touch .env.local
+# Seed the database with initial data
+cd backend
+npm run seed-mongodb
+
+# Seed team data
+npm run seed-team
+
+# Test database connection
+npm run test:db
 ```
 
-**Configure `.env.local` file:**
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_APP_NAME=Drone Club
-VITE_APP_VERSION=1.0.0
-```
+## 🏃‍♂️ How to Run
 
-### 6. Database Seeding
+### **Development Mode**
 
-```bash
-# In backend directory
-npm run seed
-```
-
-**What gets created:**
-- **Admin User**: 
-  - Email: `admin@droneclub.com`
-  - Password: `password123`
-  - Role: `super_admin`
-- **Sample Projects**: 3 drone projects with different statuses
-- **Sample Events**: 2 upcoming events with registration details
-- **Sample Blogs**: 2 blog posts with rich content
-- **Team Members**: 3 members with different roles
-- **Departments**: 4 departments (Software, Hardware, Flight Ops, R&D)
-- **Achievements**: 2 competition wins and awards
-
-### 7. Development Server Startup
-
-#### Option A: Concurrent Development (Recommended)
-
-**Terminal 1 - Backend Server:**
+**Terminal 1 - Backend:**
 ```bash
 cd backend
 npm run dev
+# Server runs on http://localhost:5000
 ```
-*Server starts on http://localhost:5000*
 
-**Terminal 2 - Frontend Development:**
+**Terminal 2 - Frontend:**
 ```bash
 cd frontend
 npm run dev
+# Frontend runs on http://localhost:3000
 ```
-*Application starts on http://localhost:3000*
 
-#### Option B: Single Terminal (Advanced)
+### **Production Mode**
 
-Install concurrently for simultaneous startup:
+**Backend:**
 ```bash
-# In root directory
-npm install -g concurrently
-
-# Create package.json in root
-echo '{"scripts":{"dev":"concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""}}' > package.json
-
-# Start both servers
-npm run dev
+cd backend
+npm start
 ```
 
-### 8. Verification & Testing
-
-#### Backend API Testing
+**Frontend:**
 ```bash
-# Test server health
-curl http://localhost:5000/api/health
-
-# Test public endpoints
-curl http://localhost:5000/api/projects
-curl http://localhost:5000/api/events
-curl http://localhost:5000/api/blogs
-
-# Test admin login
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@droneclub.com","password":"password123"}'
+cd frontend
+npm run build
+npm run preview
 ```
 
-#### Frontend Application Testing
-1. **Navigate to http://localhost:3000**
-2. **Test Navigation**: Click through all menu items
-3. **Test Responsiveness**: Resize browser window
-4. **Test Admin Login**: 
-   - Go to `/admin/login`
-   - Use credentials: `admin@droneclub.com` / `password123`
-   - Verify dashboard access
-5. **Test Dark Theme**: Ensure proper contrast and readability
+## 🔐 Admin Login Instructions
 
-### 9. Common Issues & Troubleshooting
+### **Official Admin Credentials**
+- **Email**: `teamthirdaxis@gcoej.ac.in`
+- **Password**: `TeamThird@x!$07`
+- **Role**: Super Admin
+- **Organization**: Team Third Axis Drone Club, GCOEJ
 
-#### Database Connection Issues
-```bash
-# Check PostgreSQL service status
-# Windows
-sc query postgresql-x64-13
+### **Admin Access Flow**
+1. Navigate to `/admin/login`
+2. Enter the official admin credentials above
+3. Upon successful login, you'll be redirected to `/admin/dashboard`
+4. JWT token is stored in localStorage for session management
+5. Protected routes require valid JWT token
 
-# macOS
-brew services list | grep postgresql
-
-# Linux
-sudo systemctl status postgresql
-
-# Test database connection
-psql -h localhost -p 5432 -U postgres -d drone_club_db
-```
-
-#### Port Conflicts
-```bash
-# Check what's running on ports 3000 and 5000
-# Windows
-netstat -ano | findstr :3000
-netstat -ano | findstr :5000
-
-# macOS/Linux
-lsof -i :3000
-lsof -i :5000
-
-# Kill processes if needed (use PID from above)
-# Windows
-taskkill /PID <PID> /F
-
-# macOS/Linux
-kill -9 <PID>
-```
-
-#### Node.js Version Issues
-```bash
-# Check and update Node.js
-node --version
-npm install -g npm@latest
-
-# Using nvm (Node Version Manager)
-nvm install 18
-nvm use 18
-```
-
-#### Clear npm Cache
-```bash
-npm cache clean --force
-rm -rf node_modules package-lock.json
-npm install
-```
+### **Admin Capabilities**
+- **Team Management**: Add/edit/delete team members, organize by years
+- **Event Management**: Create events, manage registrations
+- **Project Management**: Upload projects with images and descriptions
+- **Blog Management**: Write and publish blog posts
+- **Achievement Management**: Add club achievements and awards
 
 ## 📁 Detailed Project Structure
 
@@ -2049,9 +1898,12 @@ Test Coverage: Target 80%+ (in development)
 
 ### 🆘 Demo Access
 
+### 🆘 Demo Access
+
 **Admin Dashboard**: Access the admin panel with these credentials:
-- **Email**: `admin@droneclub.com`
-- **Password**: `password123`
+- **Email**: `teamthirdaxis@gcoej.ac.in`
+- **Password**: `TeamThird@x!$07`
+- **Role**: Super Admin (Team Third Axis Drone Club, GCOEJ)
 
 **Database**: Sample data is automatically seeded including:
 - 3 sample projects with different statuses

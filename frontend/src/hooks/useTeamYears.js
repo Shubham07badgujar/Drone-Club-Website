@@ -1,6 +1,41 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// Create axios instance with interceptors for automatic token handling
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+})
+
+// Request interceptor to add JWT token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('adminToken')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+      console.log('🔑 Adding auth token to request:', config.url)
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// Response interceptor to handle token expiration
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.error('❌ 401 Unauthorized - Token expired or invalid')
+      localStorage.removeItem('adminToken')
+      toast.error('Session expired. Please login again.')
+      // Redirect to login page
+      window.location.href = '/admin/login'
+    }
+    return Promise.reject(error)
+  }
+)
 
 export const useTeamYears = () => {
   const [teamYears, setTeamYears] = useState([])
@@ -11,22 +46,17 @@ export const useTeamYears = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`${API_BASE_URL}/team-years`)
+      console.log('🔄 Fetching team years...')
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.get('/api/team-years')
       
-      const data = await response.json()
-      
-      if (data.success) {
-        setTeamYears(data.teamYears || [])
-      } else {
-        throw new Error(data.message || 'Failed to fetch team years')
-      }
+      console.log('✅ Team years fetched:', response.data)
+      setTeamYears(response.data.teamYears || response.data.data || [])
     } catch (err) {
-      console.error('Error fetching team years:', err)
-      setError(err.message)
+      console.error('❌ Error fetching team years:', err)
+      const message = err.response?.data?.message || 'Failed to fetch team years'
+      setError(message)
+      toast.error(message)
       setTeamYears([])
     } finally {
       setLoading(false)
@@ -35,191 +65,124 @@ export const useTeamYears = () => {
 
   const getTeamYear = async (year) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}`)
+      console.log(`🔄 Fetching team year: ${year}`)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.get(`/api/team-years/${year}`)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        return data.teamYear
-      } else {
-        throw new Error(data.message || 'Failed to fetch team year')
-      }
+      console.log(`✅ Team year ${year} fetched:`, response.data)
+      return response.data.teamYear || response.data.data
     } catch (err) {
-      console.error('Error fetching team year:', err)
+      console.error(`❌ Error fetching team year ${year}:`, err)
+      const message = err.response?.data?.message || `Failed to fetch team year ${year}`
+      toast.error(message)
       throw err
     }
   }
 
-  const createTeamYear = async (yearData, token) => {
+  const createTeamYear = async (yearData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(yearData)
-      })
+      console.log('🔄 Creating team year:', yearData)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.post('/api/team-years', yearData)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return data.teamYear
-      } else {
-        throw new Error(data.message || 'Failed to create team year')
-      }
+      console.log('✅ Team year created:', response.data)
+      await fetchTeamYears() // Refresh the list
+      toast.success(`Team year ${yearData.year} created successfully`)
+      return response.data.teamYear || response.data.data
     } catch (err) {
-      console.error('Error creating team year:', err)
+      console.error('❌ Error creating team year:', err)
+      const message = err.response?.data?.message || 'Failed to create team year'
+      toast.error(message)
       throw err
     }
   }
 
-  const updateTeamYear = async (year, yearData, token) => {
+  const updateTeamYear = async (year, yearData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(yearData)
-      })
+      console.log(`🔄 Updating team year ${year}:`, yearData)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.put(`/api/team-years/${year}`, yearData)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return data.teamYear
-      } else {
-        throw new Error(data.message || 'Failed to update team year')
-      }
+      console.log(`✅ Team year ${year} updated:`, response.data)
+      await fetchTeamYears() // Refresh the list
+      toast.success(`Team year ${year} updated successfully`)
+      return response.data.teamYear || response.data.data
     } catch (err) {
-      console.error('Error updating team year:', err)
+      console.error(`❌ Error updating team year ${year}:`, err)
+      const message = err.response?.data?.message || `Failed to update team year ${year}`
+      toast.error(message)
       throw err
     }
   }
 
-  const deleteTeamYear = async (year, token) => {
+  const deleteTeamYear = async (year) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      console.log(`🔄 Deleting team year: ${year}`)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      await api.delete(`/api/team-years/${year}`)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return true
-      } else {
-        throw new Error(data.message || 'Failed to delete team year')
-      }
+      console.log(`✅ Team year ${year} deleted`)
+      await fetchTeamYears() // Refresh the list
+      toast.success(`Team year ${year} deleted successfully`)
+      return true
     } catch (err) {
-      console.error('Error deleting team year:', err)
+      console.error(`❌ Error deleting team year ${year}:`, err)
+      const message = err.response?.data?.message || `Failed to delete team year ${year}`
+      toast.error(message)
       throw err
     }
   }
 
-  const addTeamMember = async (year, memberData, token) => {
+  const addTeamMember = async (year, memberData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}/members`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(memberData)
-      })
+      console.log(`🔄 Adding member to team year ${year}:`, memberData)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.post(`/api/team-years/${year}/members`, memberData)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return data.teamYear
-      } else {
-        throw new Error(data.message || 'Failed to add team member')
-      }
+      console.log(`✅ Member added to team year ${year}:`, response.data)
+      await fetchTeamYears() // Refresh the list
+      toast.success(`Member ${memberData.name} added to team year ${year}`)
+      return response.data.teamYear || response.data.data
     } catch (err) {
-      console.error('Error adding team member:', err)
+      console.error(`❌ Error adding member to team year ${year}:`, err)
+      const message = err.response?.data?.message || 'Failed to add team member'
+      toast.error(message)
       throw err
     }
   }
 
-  const updateTeamMember = async (year, memberId, memberData, token) => {
+  const updateTeamMember = async (year, memberId, memberData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}/members/${memberId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(memberData)
-      })
+      console.log(`🔄 Updating member ${memberId} in team year ${year}:`, memberData)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      const response = await api.put(`/api/team-years/${year}/members/${memberId}`, memberData)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return data.teamYear
-      } else {
-        throw new Error(data.message || 'Failed to update team member')
-      }
+      console.log(`✅ Member ${memberId} updated in team year ${year}:`, response.data)
+      await fetchTeamYears() // Refresh the list
+      toast.success('Team member updated successfully')
+      return response.data.teamYear || response.data.data
     } catch (err) {
-      console.error('Error updating team member:', err)
+      console.error(`❌ Error updating member ${memberId} in team year ${year}:`, err)
+      const message = err.response?.data?.message || 'Failed to update team member'
+      toast.error(message)
       throw err
     }
   }
 
-  const deleteTeamMember = async (year, memberId, token) => {
+  const deleteTeamMember = async (year, memberId) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/team-years/${year}/members/${memberId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      console.log(`🔄 Deleting member ${memberId} from team year ${year}`)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      await api.delete(`/api/team-years/${year}/members/${memberId}`)
       
-      const data = await response.json()
-      
-      if (data.success) {
-        await fetchTeamYears() // Refresh the list
-        return true
-      } else {
-        throw new Error(data.message || 'Failed to delete team member')
-      }
+      console.log(`✅ Member ${memberId} deleted from team year ${year}`)
+      await fetchTeamYears() // Refresh the list
+      toast.success('Team member removed successfully')
+      return true
     } catch (err) {
-      console.error('Error deleting team member:', err)
+      console.error(`❌ Error deleting member ${memberId} from team year ${year}:`, err)
+      const message = err.response?.data?.message || 'Failed to delete team member'
+      toast.error(message)
       throw err
     }
   }
