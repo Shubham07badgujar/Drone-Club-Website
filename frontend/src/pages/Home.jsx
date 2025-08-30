@@ -160,14 +160,17 @@ function Home() {
         </section>
 
         {/* About Section */}
-        <section className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="py-20 px-4 md:px-8 lg:px-16 relative">
+          {/* Section Background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-slate-800/50"></div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="card-drone p-8 md:p-12"
+              className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl"
             >
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
