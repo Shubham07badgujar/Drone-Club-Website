@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { Admin } from '../models/index.js'
+import { Admin } from '../models/mongodb/index.js'
 
 export const authenticateToken = async (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ export const authenticateToken = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const admin = await Admin.findByPk(decoded.id)
+    const admin = await Admin.findById(decoded.id)
 
     if (!admin) {
       return res.status(401).json({
@@ -24,7 +24,7 @@ export const authenticateToken = async (req, res, next) => {
     }
 
     req.user = {
-      id: admin.id,
+      id: admin._id,
       email: admin.email,
       role: admin.role,
     }

@@ -1,6 +1,5 @@
 import express from 'express'
-import TeamMember from '../models/TeamMember.js'
-import Department from '../models/Department.js'
+import { TeamMember, Department } from '../models/mongodb/index.js'
 import { authenticateToken } from '../middleware/auth.js'
 import { validateTeamMember } from '../middleware/validation.js'
 

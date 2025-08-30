@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Admin } from '../models/index.js'
+import { Admin } from '../models/mongodb/index.js'
 
 // Generate JWT token
 const generateToken = (adminId) => {

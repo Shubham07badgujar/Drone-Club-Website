@@ -15,6 +15,7 @@ import projectRoutes from './src/routes/projects.js'
 import eventRoutes from './src/routes/events.js'
 import blogRoutes from './src/routes/blogs.js'
 import teamRoutes from './src/routes/team.js'
+import teamYearRoutes from './src/routes/teamYears.js'
 import departmentRoutes from './src/routes/departments.js'
 import achievementRoutes from './src/routes/achievements.js'
 
@@ -60,6 +61,7 @@ app.use('/api/projects', projectRoutes)
 app.use('/api/events', eventRoutes)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/team', teamRoutes)
+app.use('/api/team-years', teamYearRoutes)
 app.use('/api/departments', departmentRoutes)
 app.use('/api/achievements', achievementRoutes)
 

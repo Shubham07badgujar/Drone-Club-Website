@@ -9,8 +9,12 @@
     "dev": "nodemon server.js",
     "seed": "node scripts/seed.js",
     "seed-mongodb": "node scripts/seed-mongodb.js",
+    "seed-team": "node scripts/seed-team-data.js",
     "setup-atlas": "node setup-mongodb-atlas.js",
-    "test-db": "node test-db-connection.js",
+    "test:db": "node scripts/test-db-connection.js",
+    "db:health": "node scripts/db-health-check.js",
+    "db:reset": "node scripts/seed-mongodb.js",
+    "db:status": "node scripts/test-db-connection.js",
     "reset-db": "node scripts/seed-mongodb.js"
   },
   "dependencies": {
