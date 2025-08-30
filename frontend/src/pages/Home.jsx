@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Plane, Target, Users, Award, Zap, Cpu, Radio, Shield, FolderOpen, Calendar, CheckCircle, Clock, Rocket, Trophy, Code, Camera } from 'lucide-react'
-import ModernBackground from '../components/animations/ModernBackground'
+import HeroBackground from '../components/animations/HeroBackground'
 
 function Home() {
   const stats = [
