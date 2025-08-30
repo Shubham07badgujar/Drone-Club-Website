@@ -1,481 +1,356 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Plane, Target, Users, Award, Zap, Cpu, Radio, Shield } from 'lucide-react'
-import Button from '../components/ui/Button'
-import Card from '../components/ui/Card'
-import ProjectCard from '../components/cards/ProjectCard'
-import EventCard from '../components/cards/EventCard'
-import BlogCard from '../components/cards/BlogCard'
-import AchievementCard from '../components/cards/AchievementCard'
-import FloatingDroneBackground from '../components/FloatingDrone'
-import { ProfessionalDrone, RacingDrone, TechPattern, HolographicDisplay, EnergyOrb, RadarDisplay } from '../components/animations/DroneAnimations'
-import { useProjects } from '../hooks/useProjects'
-import { useEvents } from '../hooks/useEvents'
-import { useBlogs } from '../hooks/useBlogs'
-import { useAchievements } from '../hooks/useAchievements'
+import { ArrowRight, Plane, Target, Users, Award, Zap, Cpu, Radio, Shield, FolderOpen, Calendar, CheckCircle, Clock, Rocket, Trophy, Code, Camera } from 'lucide-react'
+import ModernBackground from '../components/animations/ModernBackground'
 
-const Home = () => {
-  const { projects } = useProjects()
-  const { events } = useEvents()
-  const { blogs } = useBlogs()
-  const { achievements } = useAchievements()
-
-  // Team Third Axis - GCOEJ Drone Club stats
+function Home() {
   const stats = [
     { icon: Users, label: 'Club Members', value: '60+', color: 'text-secondary-400' },
-    { icon: Award, label: 'AIR Rank SAE 2024', value: '5th', color: 'text-drone-electric-400' },
+    { icon: Award, label: 'AIR Rank SAE 2024', value: '5th', color: 'text-primary-400' },
     { icon: Target, label: 'SIH 2024 Regional', value: '1st', color: 'text-accent-400' },
-    { icon: Plane, label: 'National Comps', value: '2', color: 'text-primary-400' },
-    { icon: Radio, label: 'State Comps', value: '2', color: 'text-primary-300' },
-    { icon: Cpu, label: 'SAE Aerothon', value: '2025', color: 'text-drone-warning-400' },
-    { icon: Shield, label: 'Defense Focus', value: '100%', color: 'text-drone-electric-500' },
+    { icon: Plane, label: 'National Comps', value: '2', color: 'text-primary-300' },
+    { icon: Radio, label: 'State Comps', value: '2', color: 'text-secondary-300' },
+    { icon: Cpu, label: 'SAE Aerothon', value: '2025', color: 'text-primary-400' },
   ]
 
-  const latestProjects = projects.slice(0, 3)
-  const upcomingEvents = events.filter(event => new Date(event.date) > new Date()).slice(0, 2)
-  const recentBlogs = blogs.slice(0, 2)
-  const highlightedAchievement = achievements[0]
+  const achievements = [
+    {
+      title: 'SAE Aerothon 2024',
+      description: 'Secured All India Rank (AIR) of 5 in Phase 1',
+      icon: Award,
+      color: 'from-primary-500 to-primary-700'
+    },
+    {
+      title: 'Smart India Hackathon 2024',
+      description: '1st rank at regional level for disaster management UAV',
+      icon: Target,
+      color: 'from-secondary-500 to-secondary-700'
+    },
+    {
+      title: 'PIWOT 2024',
+      description: 'Advanced drone technology for defense applications',
+      icon: Shield,
+      color: 'from-accent-500 to-accent-700'
+    },
+    {
+      title: 'DIPEX 2025',
+      description: 'Qualified for regional level in Defense & Cyber Security',
+      icon: Cpu,
+      color: 'from-orange-500 to-orange-700'
+    }
+  ]
 
   return (
-    <div className="min-h-screen text-gray-100">
-      {/* Professional Tech Background */}
-      <TechPattern />
+    <div className="min-h-screen relative text-white overflow-hidden">
+      {/* Dynamic Background */}
+      <ModernBackground />
       
-      {/* Floating Drone Background */}
-      <FloatingDroneBackground />
-      
-      {/* Hero Section - GCOEJ Drone Club */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Professional animated background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-800 to-dark-700 opacity-95"></div>
-          
-          {/* Professional energy orbs */}
-          <EnergyOrb className="absolute top-20 left-20 w-64 h-64 opacity-20" color="primary" />
-          <EnergyOrb className="absolute bottom-32 right-16 w-48 h-48 opacity-15" color="secondary" />
-          <EnergyOrb className="absolute top-1/2 left-1/3 w-32 h-32 opacity-25" color="accent" />
-          
-          {/* Professional radar display */}
-          <RadarDisplay className="absolute top-10 right-10 w-32 h-32 opacity-30" />
-        </div>
-        
-        {/* Professional floating drones */}
-        <div className="absolute inset-0">
-          <ProfessionalDrone className="absolute top-20 left-1/4 animate-drone-patrol opacity-40" size="w-24 h-24" color="text-primary-500" />
-          <RacingDrone className="absolute bottom-40 right-1/4 animate-hover-drone opacity-30" size="w-16 h-16" color="text-secondary-500" />
-          
-          {/* Tech particles */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className={`absolute rounded-full animate-signal-pulse opacity-40 ${
-                i % 3 === 0 ? 'w-1 h-1 bg-primary-500' :
-                i % 3 === 1 ? 'w-1 h-1 bg-secondary-500' :
-                'w-1 h-1 bg-accent-500'
-              }`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Professional Hero Content */}
-        <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
-          <HolographicDisplay className="mb-8">
-            <div className="mb-6">
-              <ProfessionalDrone className="w-24 h-24 mx-auto text-primary-500 animate-hover-drone" />
-            </div>
-            
-            <h1 className="hero-title font-bold text-white mb-6 animate-fadeIn">
-              <span className="block text-glow text-4xl sm:text-6xl md:text-8xl">GCOEJ</span>
-              <span className="block text-primary-500 text-glow text-2xl sm:text-4xl md:text-6xl">TEAM THIRD AXIS</span>
-              <span className="block text-xs sm:text-sm md:text-lg font-normal text-gray-300 mt-4 tracking-widest animate-tech-glow">
-                INNOVATE • ELEVATE • DOMINATE
-              </span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
-              Team Third Axis is the official drone club of the Government College of Engineering, Jalgaon. 
-              We are a dynamic group of students focused on advancing drone technology and UAV development through 
-              cutting-edge autonomous systems and engineering excellence.
-            </p>
-          </HolographicDisplay>
-          
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 px-4">
-            <Link to="/projects">
-              <button className="btn-primary group w-full sm:w-auto px-6 sm:px-8 py-4 text-base sm:text-lg">
-                EXPLORE PROJECTS
-                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
-              </button>
-            </Link>
-            
-            <Link to="/about">
-              <button className="btn-secondary w-full sm:w-auto px-6 sm:px-8 py-4 text-base sm:text-lg">
-                JOIN CLUB
-              </button>
-            </Link>
-            
-            <Link to="/events">
-              <button className="btn-accent w-full sm:w-auto px-6 sm:px-8 py-4 text-base sm:text-lg">
-                EVENTS
-              </button>
-            </Link>
-          </div>
-
-          {/* Professional Status Indicators */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm max-w-2xl mx-auto">
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-drone-electric-500 rounded-full animate-signal-pulse"></div>
-              <span className="text-gray-400">SYSTEMS ONLINE</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-primary-500 rounded-full animate-signal-pulse"></div>
-              <span className="text-gray-400">DRONES ACTIVE</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-secondary-500 rounded-full animate-signal-pulse"></div>
-              <span className="text-gray-400">RESEARCH ACTIVE</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-accent-500 rounded-full animate-signal-pulse"></div>
-              <span className="text-gray-400">MISSION READY</span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary-400 rounded-full p-1">
-            <div className="w-1 h-3 bg-primary-400 rounded-full mx-auto animate-pulse"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Third Axis - About Section */}
-      <section className="py-16 sm:py-24 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="glass-effect-strong rounded-3xl p-8 sm:p-12 relative overflow-hidden">
-            {/* Background effects */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-60"></div>
-            <div className="absolute inset-0 opacity-5">
-              <TechPattern />
-            </div>
-            
-            <div className="relative z-10">
-              <HolographicDisplay>
-                <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-8 text-glow">
-                  ABOUT TEAM THIRD AXIS
-                </h2>
-              </HolographicDisplay>
+      {/* Main Content */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <section className="relative py-20 px-4 md:px-8 lg:px-16 min-h-screen flex items-center">
+          <div className="max-w-7xl mx-auto w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <motion.h1 
+                className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-gradient-to-r from-orange-400 via-blue-400 to-purple-400 bg-clip-text text-transparent leading-tight"
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                TEAM THIRD AXIS
+              </motion.h1>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-                {/* Left side - Mission */}
-                <div className="space-y-6">
-                  <div className="card-drone p-6 holographic">
-                    <h3 className="text-xl sm:text-2xl font-bold text-primary-400 mb-4 text-glow">Our Mission</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                      Team Third Axis is the official drone club of the Government College of Engineering, Jalgaon. 
-                      We are a dynamic group of students focused on advancing drone technology and UAV development. 
-                      Our mission is to design cutting-edge, autonomous drones and provide students with hands-on 
-                      experience in building and programming them.
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Government College of Engineering & Research, Avasari Pune
+              </motion.p>
+              
+              <motion.p 
+                className="text-lg md:text-xl text-gray-400 mb-12 max-w-4xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Pushing the boundaries of aerial robotics and autonomous systems. 
+                Where innovation meets precision in the skies above.
+              </motion.p>
+
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                <Link to="/projects">
+                  <button className="btn-primary group">
+                    <Rocket className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                    Explore Projects
+                  </button>
+                </Link>
+                <Link to="/about">
+                  <button className="btn-secondary group">
+                    <Users className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+                    Join Our Team
+                  </button>
+                </Link>
+                <Link to="/events">
+                  <button className="btn-accent group">
+                    <Calendar className="w-5 h-5 mr-2 group-hover:pulse transition-transform" />
+                    Events
+                  </button>
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Status Badges */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+            >
+              <motion.div 
+                className="status-badge bg-green-500/20 border-green-500/30 group cursor-pointer"
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <CheckCircle className="w-6 h-6 text-green-400 group-hover:animate-pulse" />
+                <span className="font-semibold">Active Development</span>
+              </motion.div>
+              
+              <motion.div 
+                className="status-badge bg-orange-500/20 border-orange-500/30 group cursor-pointer"
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Clock className="w-6 h-6 text-orange-400 group-hover:animate-spin" />
+                <span className="font-semibold">Competitions Ready</span>
+              </motion.div>
+              
+              <motion.div 
+                className="status-badge bg-blue-500/20 border-blue-500/30 group cursor-pointer"
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Zap className="w-6 h-6 text-blue-400 group-hover:animate-bounce" />
+                <span className="font-semibold">Innovation Hub</span>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="card-drone p-8 md:p-12"
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  About Team Third Axis
+                </h2>
+                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                  Official drone club of GCOEJ, pioneering UAV technology and autonomous systems
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <motion.div
+                  className="space-y-6"
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="card-drone p-6 border-l-4 border-primary-500">
+                    <h3 className="text-2xl font-bold text-primary-400 mb-4">Our Mission</h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Team Third Axis is dedicated to advancing drone technology and UAV development. 
+                      We focus on cutting-edge autonomous systems, providing students with hands-on 
+                      experience in building, programming, and piloting advanced aerial vehicles.
                     </p>
                   </div>
                   
-                  <div className="card-drone p-6 holographic">
-                    <h3 className="text-xl sm:text-2xl font-bold text-secondary-400 mb-4 text-glow">Innovation Focus</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                      We aim to pioneer innovative solutions through engineering excellence and lead in the field 
-                      of drone technology. We actively participate in drone competitions and have a proven track 
-                      record of success, including competing in SAE Aerothon 2025.
+                  <div className="card-drone p-6 border-l-4 border-secondary-500">
+                    <h3 className="text-2xl font-bold text-secondary-400 mb-4">Innovation Focus</h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      We pioneer innovative solutions through engineering excellence and lead in 
+                      drone technology research. Our team actively participates in national competitions 
+                      and maintains a strong track record of achievements.
                     </p>
                   </div>
-                </div>
-                
-                {/* Right side - Impact */}
-                <div className="space-y-6">
-                  <div className="card-drone p-6 holographic">
-                    <h3 className="text-xl sm:text-2xl font-bold text-accent-400 mb-4 text-glow">Our Impact</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base mb-4">
-                      The club has a strong presence, with over <span className="text-primary-400 font-bold">60 members</span>, 
-                      and has organized <span className="text-secondary-400 font-bold">two national</span> and 
-                      <span className="text-accent-400 font-bold"> two state-level</span> drone competitions to promote UAV innovation.
+                </motion.div>
+
+                <motion.div
+                  className="space-y-6"
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="card-drone p-6 border-l-4 border-accent-500">
+                    <h3 className="text-2xl font-bold text-accent-400 mb-4">Our Impact</h3>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                      With over 60 active members, we've organized multiple national and state-level 
+                      drone competitions. Our achievements include securing AIR 5 in SAE Aerothon 2024 
+                      and 1st place in Smart India Hackathon 2024 regional rounds.
                     </p>
-                    
-                    <div className="flex items-center space-x-4 mt-4">
-                      <div className="w-3 h-3 bg-primary-500 rounded-full animate-signal-pulse"></div>
-                      <span className="text-gray-400 text-sm">SAE Aerothon 2025 Participant</span>
+                  </div>
+                  
+                  <div className="card-drone p-6 border-l-4 border-orange-500">
+                    <h3 className="text-2xl font-bold text-orange-400 mb-4">Defense Applications</h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Specializing in advanced drone technology for defense applications, disaster 
+                      management, and real-time surveillance systems with cutting-edge automation 
+                      and AI integration.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                Our Numbers
+              </h2>
+              <p className="text-xl text-gray-300">Achievements that speak for themselves</p>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  className="card-drone p-6 text-center group hover:border-primary-500 transition-all duration-300"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                >
+                  <stat.icon className={`w-12 h-12 mx-auto mb-4 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
+                  <div className="text-gray-400 text-sm">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Achievements Section */}
+        <section className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Our Achievements
+              </h2>
+              <p className="text-xl text-gray-300">Celebrating our journey of excellence</p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {achievements.map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  className="card-drone p-8 group hover:border-primary-500 transition-all duration-300"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                >
+                  <div className="flex items-center mb-6">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${achievement.color} rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300`}>
+                      <achievement.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-white mb-2">{achievement.title}</h3>
+                      <div className="w-12 h-1 bg-primary-500 rounded"></div>
                     </div>
                   </div>
-                  
-                  <div className="card-drone p-6 holographic">
-                    <h3 className="text-xl sm:text-2xl font-bold text-drone-electric-400 mb-4 text-glow">Defense Applications</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                      Specializing in advanced drone technology designed for defense applications, 
-                      disaster management, and real-time surveillance systems with cutting-edge automation.
-                    </p>
-                  </div>
-                </div>
-              </div>
+                  <p className="text-gray-300 text-lg leading-relaxed">
+                    {achievement.description}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Achievements Section */}
-      <section className="py-16 sm:py-24 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <HolographicDisplay>
-            <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-12 text-glow">
-              OUR ACHIEVEMENTS
-            </h2>
-          </HolographicDisplay>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* SAE Aerothon 2024 */}
-            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center mr-4">
-                  <Award className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-primary-400 text-glow">SAE Aerothon 2024</h3>
-                  <p className="text-gray-400 text-sm">National Competition</p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                The team participated in the SAE Aerothon India 2024, a national-level competition focused on 
-                designing, building, and piloting Uncrewed Aircraft Systems (UAS). Competing against top institutions, 
-                Team Third Axis secured an <span className="text-primary-400 font-bold">All India Rank (AIR) of 5 in Phase 1</span>.
-              </p>
-            </div>
-            
-            {/* Smart India Hackathon 2024 */}
-            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-700 rounded-lg flex items-center justify-center mr-4">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-secondary-400 text-glow">Smart India Hackathon 2024</h3>
-                  <p className="text-gray-400 text-sm">Regional Winner</p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                Team Third Axis secured the <span className="text-secondary-400 font-bold">1st rank at the regional level</span> 
-                in the Smart India Hackathon (SIH) 2024. Their winning project was a drone-based UAV system for disaster 
-                management, enabling aerial surveillance, real-time data collection, and efficient supply delivery.
-              </p>
-            </div>
-            
-            {/* PIWOT 2024 */}
-            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-700 rounded-lg flex items-center justify-center mr-4">
-                  <Shield className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-accent-400 text-glow">PIWOT 2024</h3>
-                  <p className="text-gray-400 text-sm">Defense Technology</p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                At PIWOT 2024, held at the Jio Convention Centre in Mumbai, Team Third Axis demonstrated their 
-                advanced drone technology designed for applications in defense. They also engaged with leaders 
-                and investors to explore collaboration opportunities.
-              </p>
-            </div>
-            
-            {/* DIPEX 2025 */}
-            <div className="card-drone p-6 sm:p-8 holographic hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-drone-electric-500 to-drone-electric-700 rounded-lg flex items-center justify-center mr-4">
-                  <Cpu className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-drone-electric-400 text-glow">DIPEX 2025</h3>
-                  <p className="text-gray-400 text-sm">State Level Qualifier</p>
-                </div>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                In DIPEX 2025, a state-level exhibition-cum-competition, Team Third Axis successfully 
-                <span className="text-drone-electric-400 font-bold"> qualified for the regional level round</span> 
-                under the theme of "Defense and Cyber Security".
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Professional Stats Section */}
-      <section className="py-12 sm:py-20 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <HolographicDisplay>
-            <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8 sm:mb-12 text-glow">
-              TEAM THIRD AXIS STATUS
-            </h2>
-          </HolographicDisplay>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 sm:gap-6">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="card-drone p-4 sm:p-6 mb-4 hover:border-primary-400 transition-all duration-300">
-                  <stat.icon className={`w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-4 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
-                  <div className="text-2xl sm:text-3xl font-bold text-white mb-2 text-glow">{stat.value}</div>
-                  <div className="text-gray-400 text-xs sm:text-sm tracking-wide">{stat.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Projects Section */}
-      <section className="py-12 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8 sm:mb-12">
-            <HolographicDisplay>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white text-glow mb-2">
-                ACTIVE PROJECTS
+        {/* Call to Action */}
+        <section className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              className="card-drone p-12 text-center"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className="w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-8"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <Plane className="w-10 h-10 text-white" />
+              </motion.div>
+              
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent">
+                Join Team Third Axis
               </h2>
-              <p className="text-gray-400">Current research and development initiatives</p>
-            </HolographicDisplay>
-            <Link to="/projects">
-              <button className="btn-secondary w-full sm:w-auto">
-                <Zap className="w-4 h-4 mr-2" />
-                ALL PROJECTS
-              </button>
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {latestProjects.map((project) => (
-              <div key={project.id} className="card-drone p-4 sm:p-6 hover:transform hover:-translate-y-2 transition-all duration-300 holographic">
-                <ProjectCard
-                  project={project}
-                  onLearnMore={() => {}}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      {upcomingEvents.length > 0 && (
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass-effect-strong rounded-2xl p-12">
-              <div className="flex items-center justify-between mb-12">
-                <HolographicDisplay>
-                  <h2 className="text-4xl font-bold text-white text-glow mb-2">UPCOMING EVENTS</h2>
-                  <p className="text-gray-400">Training sessions and competitions</p>
-                </HolographicDisplay>
-                <Link to="/events">
-                  <button className="btn-accent">VIEW SCHEDULE</button>
+              
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Ready to soar to new heights? Join our elite team of drone engineers, 
+                researchers, and pilots at GCOEJ. Be part of the future of aerial technology.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/contact">
+                  <button className="btn-primary group px-8 py-4 text-lg">
+                    Get Started
+                    <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
+                  </button>
+                </Link>
+                
+                <Link to="/about">
+                  <button className="btn-secondary px-8 py-4 text-lg">
+                    Learn More
+                  </button>
                 </Link>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="card-drone p-6 holographic">
-                    <EventCard
-                      event={event}
-                      onRegister={() => {}}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            </motion.div>
           </div>
         </section>
-      )}
-
-      {/* Recent Blogs */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <HolographicDisplay>
-              <h2 className="text-4xl font-bold text-white text-glow mb-2">MISSION REPORTS</h2>
-              <p className="text-gray-400">Latest updates from the field</p>
-            </HolographicDisplay>
-            <Link to="/blog">
-              <button className="btn-secondary">ALL REPORTS</button>
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {recentBlogs.map((blog) => (
-              <div key={blog.id} className="card-drone p-6 holographic">
-                <BlogCard
-                  blog={blog}
-                  onReadMore={() => {}}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Achievement */}
-      {highlightedAchievement && (
-        <section className="py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass-effect-strong rounded-2xl p-12 text-center">
-              <HolographicDisplay>
-                <h2 className="text-4xl font-bold text-white text-glow mb-8">LATEST ACHIEVEMENT</h2>
-              </HolographicDisplay>
-              
-              <div className="card-drone p-8 holographic">
-                <AchievementCard
-                  achievement={highlightedAchievement}
-                  featured={true}
-                />
-              </div>
-              
-              <Link to="/achievements">
-                <button className="btn-primary mt-8">
-                  VIEW ALL ACHIEVEMENTS
-                </button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Call to Action */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="glass-effect-strong rounded-2xl p-12">
-            <HolographicDisplay>
-              <ProfessionalDrone className="w-16 h-16 mx-auto mb-6 text-primary-500 animate-hover-drone" />
-              <h2 className="text-4xl font-bold text-white text-glow mb-6">JOIN TEAM THIRD AXIS</h2>
-              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Ready to soar to new heights? Join our elite team of drone engineers, 
-                researchers, and pilots at GCOEJ. Be part of the future of aerial technology and defense innovation.
-              </p>
-            </HolographicDisplay>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact">
-                <button className="btn-primary group px-8 py-4 text-lg">
-                  GET STARTED
-                  <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
-                </button>
-              </Link>
-              
-              <Link to="/about">
-                <button className="btn-secondary px-8 py-4 text-lg">
-                  LEARN MORE
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 }
