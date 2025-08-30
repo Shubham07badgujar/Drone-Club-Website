@@ -215,7 +215,7 @@ function Home() {
                   transition={{ duration: 0.8, delay: 0.4 }}
                   viewport={{ once: true }}
                 >
-                  <div className="card-drone p-6 border-l-4 border-accent-500">
+                  <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-6 border-l-4 border-accent-500 hover:bg-white/10 transition-all duration-300">
                     <h3 className="text-2xl font-bold text-accent-400 mb-4">Our Impact</h3>
                     <p className="text-gray-300 leading-relaxed mb-4">
                       With over 60 active members, we've organized multiple national and state-level 
@@ -224,7 +224,7 @@ function Home() {
                     </p>
                   </div>
                   
-                  <div className="card-drone p-6 border-l-4 border-orange-500">
+                  <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-6 border-l-4 border-orange-500 hover:bg-white/10 transition-all duration-300">
                     <h3 className="text-2xl font-bold text-orange-400 mb-4">Defense Applications</h3>
                     <p className="text-gray-300 leading-relaxed">
                       Specializing in advanced drone technology for defense applications, disaster 
@@ -239,8 +239,11 @@ function Home() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="py-20 px-4 md:px-8 lg:px-16 relative">
+          {/* Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-purple-900/20 to-blue-900/30"></div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -258,7 +261,7 @@ function Home() {
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="card-drone p-6 text-center group hover:border-primary-500 transition-all duration-300"
+                  className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-6 text-center group hover:border-primary-500 hover:bg-white/10 transition-all duration-300 shadow-lg"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -275,8 +278,11 @@ function Home() {
         </section>
 
         {/* Achievements Section */}
-        <section className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="py-20 px-4 md:px-8 lg:px-16 relative">
+          {/* Dark gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-800/50 to-gray-900/50"></div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -294,7 +300,7 @@ function Home() {
               {achievements.map((achievement, index) => (
                 <motion.div
                   key={index}
-                  className="card-drone p-8 group hover:border-primary-500 transition-all duration-300"
+                  className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-8 group hover:border-primary-500 hover:bg-white/10 transition-all duration-300 shadow-xl"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -320,10 +326,13 @@ function Home() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto">
+        <section className="py-20 px-4 md:px-8 lg:px-16 relative">
+          {/* Premium gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-900/30 via-blue-900/20 to-purple-900/30"></div>
+          
+          <div className="max-w-4xl mx-auto relative z-10">
             <motion.div
-              className="card-drone p-12 text-center"
+              className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-12 text-center shadow-2xl"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
