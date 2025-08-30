@@ -43,28 +43,37 @@ function Home() {
 
   return (
     <div className="min-h-screen relative text-white overflow-hidden">
-      {/* Dynamic Background */}
-      <ModernBackground />
-      
       {/* Main Content */}
       <div className="relative z-10">
-        {/* Hero Section */}
+        {/* Hero Section with Custom Background */}
         <section className="relative py-20 px-4 md:px-8 lg:px-16 min-h-screen flex items-center">
-          <div className="max-w-7xl mx-auto w-full">
+          {/* Hero Background */}
+          <HeroBackground />
+          
+          <div className="max-w-7xl mx-auto w-full relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <motion.h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-gradient-to-r from-orange-400 via-blue-400 to-purple-400 bg-clip-text text-transparent leading-tight"
+              {/* Enhanced Title with Better Typography */}
+              <motion.div
+                className="mb-8"
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
               >
-                TEAM THIRD AXIS
-              </motion.h1>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-4 leading-tight">
+                  <span className="block text-gray-200 mb-2">GCOEJ</span>
+                  <span className="block bg-gradient-to-r from-orange-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    TEAM THIRD AXIS
+                  </span>
+                </h1>
+                <div className="text-sm md:text-lg font-light text-gray-400 mt-6 tracking-[0.3em] animate-pulse">
+                  INNOVATE • ELEVATE • DOMINATE
+                </div>
+              </motion.div>
               
               <motion.p 
                 className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
@@ -72,17 +81,18 @@ function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Government College of Engineering & Research, Avasari Pune
+                Team Third Axis is the official drone club of the 
+                <span className="text-blue-400 font-medium"> Government College of Engineering, Jalgaon</span>.
               </motion.p>
               
               <motion.p 
-                className="text-lg md:text-xl text-gray-400 mb-12 max-w-4xl mx-auto"
+                className="text-lg md:text-xl text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                Pushing the boundaries of aerial robotics and autonomous systems. 
-                Where innovation meets precision in the skies above.
+                We are a dynamic group of students focused on advancing drone technology and UAV development through 
+                cutting-edge autonomous systems and engineering excellence.
               </motion.p>
 
               <motion.div 
