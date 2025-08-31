@@ -37,13 +37,36 @@ export const projectSchema = Joi.object({
 })
 
 export const eventSchema = Joi.object({
-  title: Joi.string().min(3).max(255).required(),
+  eventName: Joi.string().min(3).max(200).required(),
+  title: Joi.string().min(3).max(200).optional(), // For backward compatibility
   description: Joi.string().min(10).required(),
+  highlights: Joi.array().items(Joi.string().max(500)).max(10).allow(null),
   date: Joi.date().min('now').required(),
   time: Joi.string().required(),
-  location: Joi.string().min(3).required(),
-  max_capacity: Joi.number().integer().min(1).allow(null),
-  image_url: Joi.string().uri().allow(null, ''),
+  venue: Joi.string().min(3).max(200).required(),
+  registrationFee: Joi.alternatives().try(
+    Joi.string(),
+    Joi.number().min(0)
+  ).required(),
+  registrationDeadline: Joi.date().allow(null),
+  prizePool: Joi.object({
+    total: Joi.number().min(0).allow(null),
+    firstPrize: Joi.number().min(0).allow(null),
+    secondPrize: Joi.number().min(0).allow(null),
+    thirdPrize: Joi.number().min(0).allow(null)
+  }).allow(null),
+  rules: Joi.array().items(Joi.string().max(1000)).max(20).allow(null),
+  contactPersons: Joi.array().items(
+    Joi.object({
+      name: Joi.string().min(2).max(100).required(),
+      phone: Joi.string().pattern(/^(\+91[\s\-]?)?[6-9]\d{9}$/).required()
+    })
+  ).max(10).allow(null),
+  status: Joi.string().valid('Draft', 'Published', 'Registration Open', 'Registration Closed', 'Ongoing', 'Completed', 'Cancelled').allow(null),
+  category: Joi.string().valid('Competition', 'Workshop', 'Seminar', 'Exhibition', 'Networking', 'Training', 'Other').allow(null),
+  imageUrl: Joi.string().uri().allow(null, ''),
+  is_featured: Joi.boolean().allow(null),
+  isFeatured: Joi.boolean().allow(null) // For backward compatibility
 })
 
 export const eventRegistrationSchema = Joi.object({
