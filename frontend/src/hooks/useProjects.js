@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// No need for API_BASE_URL since we're using Vite's proxy for /api calls
+// and axios defaults from AuthContext
 
 const useProjects = () => {
   const [projects, setProjects] = useState([])
@@ -20,7 +21,7 @@ const useProjects = () => {
     setError('')
     try {
       console.log('🔍 Fetching projects with params:', params)
-      const response = await axios.get(`${API_BASE_URL}/api/projects`, { params })
+      const response = await axios.get(`/api/projects`, { params })
       console.log('✅ Projects response:', response.data)
       
       if (response.data.success) {
@@ -45,7 +46,7 @@ const useProjects = () => {
     setError('')
     try {
       console.log(`🔍 Fetching project: ${id}`)
-      const response = await axios.get(`${API_BASE_URL}/api/projects/${id}`)
+      const response = await axios.get(`/api/projects/${id}`)
       console.log('✅ Project response:', response.data)
       
       if (response.data.success) {
@@ -69,7 +70,7 @@ const useProjects = () => {
     setError('')
     try {
       console.log('🔍 Fetching featured projects...')
-      const response = await axios.get(`${API_BASE_URL}/api/projects/featured`)
+      const response = await axios.get(`/api/projects/featured`)
       console.log('✅ Featured projects response:', response.data)
       
       if (response.data.success) {
@@ -94,7 +95,7 @@ const useProjects = () => {
     setError('')
     try {
       console.log(`🔍 Fetching projects for year: ${year}`)
-      const response = await axios.get(`${API_BASE_URL}/api/projects/year/${year}`)
+      const response = await axios.get(`/api/projects/year/${year}`)
       console.log('✅ Projects by year response:', response.data)
       
       if (response.data.success) {
@@ -118,11 +119,15 @@ const useProjects = () => {
     setError('')
     try {
       console.log('➕ Creating project:', projectData)
-      const response = await axios.post(
-        `${API_BASE_URL}/api/projects`,
-        projectData,
-        { headers: getAuthHeaders() }
-      )
+      
+      // Ensure we have a valid token before proceeding
+      const token = localStorage.getItem('adminToken')
+      if (!token) {
+        throw new Error('Unauthorized: Please login as admin')
+      }
+      
+  // Use axios defaults for auth (set by AuthContext)
+  const response = await axios.post(`/api/projects`, projectData)
       console.log('✅ Create project response:', response.data)
       
       if (response.data.success) {
@@ -133,7 +138,38 @@ const useProjects = () => {
         throw new Error(response.data.message || 'Failed to create project')
       }
     } catch (err) {
-      console.error('❌ Create project error:', err)
+      console.error('❌ Create project error (raw):', err)
+
+      // Auth issues
+      if (err.response?.status === 403 || err.response?.status === 401) {
+        const message = err.response?.data?.message || 'Unauthorized: Please login as admin'
+        setError(message)
+        return { success: false, message, errors: null }
+      }
+
+      // Validation errors (backend returns array of { field, message })
+      if (err.response?.status === 400 && Array.isArray(err.response?.data?.errors)) {
+        const fieldErrorsArray = err.response.data.errors
+        const mapped = fieldErrorsArray.reduce((acc, e) => {
+          if (e.field) acc[e.field] = e.message
+          return acc
+        }, {})
+        const message = err.response?.data?.message || 'Validation error'
+        setError(message)
+        return { success: false, message, errors: mapped }
+      }
+
+      // Network / DB connectivity (e.g., ENOTFOUND, ECONN, Network Error)
+      if (!err.response) {
+        const netMsg = err.message || ''
+        if (/ENOTFOUND|ECONN|Network Error|ECONNREFUSED/i.test(netMsg)) {
+          const message = 'Cannot reach server / database. Check your internet connection.'
+          setError(message)
+          return { success: false, message, errors: null }
+        }
+      }
+
+      // Generic fallback
       const errorMessage = err.response?.data?.message || err.message || 'Failed to create project'
       const errors = err.response?.data?.errors || null
       setError(errorMessage)
@@ -149,10 +185,20 @@ const useProjects = () => {
     setError('')
     try {
       console.log(`📝 Updating project ${id}:`, projectData)
+      
+      // Ensure we have a valid token before proceeding
+      const token = localStorage.getItem('adminToken')
+      if (!token) {
+        throw new Error('Unauthorized: Please login as admin')
+      }
+      
       const response = await axios.put(
-        `${API_BASE_URL}/api/projects/${id}`,
+        `/api/projects/${id}`,
         projectData,
-        { headers: getAuthHeaders() }
+        { 
+          headers: getAuthHeaders(),
+          withCredentials: true
+        }
       )
       console.log('✅ Update project response:', response.data)
       
@@ -165,6 +211,14 @@ const useProjects = () => {
       }
     } catch (err) {
       console.error('❌ Update project error:', err)
+      
+      // Handle auth errors specifically
+      if (err.response?.status === 403 || err.response?.status === 401) {
+        const message = 'Unauthorized: Please login as admin'
+        setError(message)
+        return { success: false, message, errors: null }
+      }
+      
       const errorMessage = err.response?.data?.message || err.message || 'Failed to update project'
       const errors = err.response?.data?.errors || null
       setError(errorMessage)
@@ -180,9 +234,19 @@ const useProjects = () => {
     setError('')
     try {
       console.log(`🗑️ Deleting project: ${id}`)
+      
+      // Ensure we have a valid token before proceeding
+      const token = localStorage.getItem('adminToken')
+      if (!token) {
+        throw new Error('Unauthorized: Please login as admin')
+      }
+      
       const response = await axios.delete(
-        `${API_BASE_URL}/api/projects/${id}`,
-        { headers: getAuthHeaders() }
+        `/api/projects/${id}`,
+        { 
+          headers: getAuthHeaders(),
+          withCredentials: true
+        }
       )
       console.log('✅ Delete project response:', response.data)
       
@@ -195,6 +259,14 @@ const useProjects = () => {
       }
     } catch (err) {
       console.error('❌ Delete project error:', err)
+      
+      // Handle auth errors specifically
+      if (err.response?.status === 403 || err.response?.status === 401) {
+        const message = 'Unauthorized: Please login as admin'
+        setError(message)
+        return { success: false, message }
+      }
+      
       const errorMessage = err.response?.data?.message || err.message || 'Failed to delete project'
       setError(errorMessage)
       return { success: false, message: errorMessage }
@@ -209,10 +281,20 @@ const useProjects = () => {
     setError('')
     try {
       console.log(`⭐ Toggling featured status for project: ${id}`)
+      
+      // Ensure we have a valid token before proceeding
+      const token = localStorage.getItem('adminToken')
+      if (!token) {
+        throw new Error('Unauthorized: Please login as admin')
+      }
+      
       const response = await axios.patch(
-        `${API_BASE_URL}/api/projects/${id}/toggle-featured`,
+        `/api/projects/${id}/toggle-featured`,
         {},
-        { headers: getAuthHeaders() }
+        { 
+          headers: getAuthHeaders(),
+          withCredentials: true
+        }
       )
       console.log('✅ Toggle featured response:', response.data)
       
@@ -225,6 +307,14 @@ const useProjects = () => {
       }
     } catch (err) {
       console.error('❌ Toggle featured error:', err)
+      
+      // Handle auth errors specifically
+      if (err.response?.status === 403 || err.response?.status === 401) {
+        const message = 'Unauthorized: Please login as admin'
+        setError(message)
+        return { success: false, message }
+      }
+      
       const errorMessage = err.response?.data?.message || err.message || 'Failed to toggle featured status'
       setError(errorMessage)
       return { success: false, message: errorMessage }
