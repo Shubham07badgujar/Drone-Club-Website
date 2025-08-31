@@ -5,6 +5,7 @@ import { useTeamYears } from '../hooks/useTeamYears'
 import TeamMemberModal from '../components/TeamMemberModal'
 import TeamYearModal from '../components/TeamYearModal'
 import AchievementManagement from '../components/admin/AchievementManagement'
+import ProjectManagement from '../components/ProjectManagement'
 
 const AdminDashboard = () => {
   const { user, logout, token } = useAuth()
@@ -369,13 +370,7 @@ const AdminDashboard = () => {
         )
 
       case 'projects':
-        return (
-          <div className="bg-gray-800 rounded-xl p-6 text-center">
-            <FaProjectDiagram className="text-purple-500 text-6xl mx-auto mb-4" />
-            <h3 className="text-white text-xl font-semibold mb-2">Projects Management</h3>
-            <p className="text-gray-400 mb-4">Projects management functionality coming soon...</p>
-          </div>
-        )
+        return <ProjectManagement />
 
       case 'blogs':
         return (

@@ -8,12 +8,32 @@ export const loginSchema = Joi.object({
 
 export const projectSchema = Joi.object({
   title: Joi.string().min(3).max(255).required(),
+  year: Joi.number().integer().min(2000).max(new Date().getFullYear() + 5).required(),
   description: Joi.string().min(10).required(),
-  media_url: Joi.string().uri().allow(null, ''),
-  technologies: Joi.array().items(Joi.string()),
-  status: Joi.string().valid('planning', 'in-progress', 'completed', 'on-hold'),
-  github_url: Joi.string().uri().allow(null, ''),
-  demo_url: Joi.string().uri().allow(null, ''),
+  teamContributions: Joi.string().min(10).required(),
+  imageUrl: Joi.string().uri().allow(null, ''),
+  category: Joi.string().valid(
+    'Competition', 
+    'Research', 
+    'Commercial', 
+    'Educational', 
+    'Open Source', 
+    'Innovation', 
+    'Community',
+    'Collaboration'
+  ).allow(null),
+  status: Joi.string().valid('Planning', 'In Progress', 'Completed', 'On Hold').allow(null),
+  technologies: Joi.array().items(Joi.string()).allow(null),
+  teamMembers: Joi.array().items(
+    Joi.object({
+      name: Joi.string().min(2).max(100).required(),
+      role: Joi.string().min(2).max(100).required()
+    })
+  ).allow(null),
+  githubUrl: Joi.string().uri().allow(null, ''),
+  demoUrl: Joi.string().uri().allow(null, ''),
+  is_featured: Joi.boolean().allow(null),
+  display_order: Joi.number().integer().min(0).allow(null)
 })
 
 export const eventSchema = Joi.object({
