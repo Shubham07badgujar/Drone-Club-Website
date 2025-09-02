@@ -2,6 +2,36 @@
 
 A modern, full-stack web application for managing a drone club with features for team management, events, projects, blog posts, achievements, and admin panel functionality.
 
+## 🗂️ File structure
+
+```
+Drone-Club-Website/
+├── backend/                      # Express API server
+│   ├── package.json              # Backend dependencies & scripts
+│   ├── server.js                 # Server entrypoint
+│   ├── .env.example              # Backend env variables template
+│   ├── src/
+│   │   ├── controllers/          # Route handlers / controllers
+│   │   ├── models/               # Mongoose models
+│   │   ├── routes/               # Express route definitions
+│   │   ├── middleware/           # Auth & validation middleware
+│   │   └── config/               # DB & other configuration
+│   └── scripts/                  # DB seed & utility scripts
+├── frontend/                     # React + Vite client
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── .env.example
+│   └── src/
+│       ├── components/           # Reusable UI components
+│       ├── pages/                # Route/page components
+│       ├── hooks/                # Custom React hooks
+│       └── assets/               # Images & static assets
+├── uploads/                      # Uploaded files (images)
+├── DEPLOYMENT_DOCUMENTATION.md   # Deployment instructions
+├── README_DEPLOYMENT.md          # Deployment guide (Render)
+└── README.md                     # This file
+```
+
 ## 🌟 Features
 
 ### 🏠 **Public Features**
