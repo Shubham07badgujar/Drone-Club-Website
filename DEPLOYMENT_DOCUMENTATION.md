@@ -2,7 +2,8 @@
 
 ## 🎯 Project Overview
 
-**Team Third Axis - Drone Club Website** is a full-stack web application designed for managing a drone club's online presence. The system includes event management, project showcases, team member profiles, achievement tracking, and administrative capabilities.
+**Team Third Axis - Drone Club Website** is a full-stack web application designed for managing a drone club's online presence. The system includes event management, project showcases, 
+team member profiles, achievement tracking, and administrative capabilities.
 
 ### 🏗️ Technical Architecture
 
